@@ -1,7 +1,7 @@
 import React from "react";
 import './App.scss';
-import { MainSelectPage } from './MainSelectPage.js'; 
-import { Provider } from './ImageContext.js'; 
+import { MainPage } from './MainPage.js'; 
+import { Provider } from './CodeContext.js'; 
 import {BrowserRouter, Routes, Route} from "react-router-dom";
 
 

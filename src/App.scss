@@ -1,0 +1,75 @@
+.main-menu-block{
+    width: 100%;
+    .main-menu-item{
+        width: 20%;
+        text-align: center;
+        display: inline-block;
+        font-size: 1.2vw;
+    }
+}
+
+.page-window{
+    object{
+        width: 80vw;
+        height: 50vh;
+    }
+}
+
+.preview-block{
+    margin: 0 auto;
+    img{
+        width: 100%;
+    }
+    canvas{
+        position: absolute; 
+        padding: 1%;
+        width: 70%;
+    }
+}
+
+.top-menu{
+    Button{
+        padding: 0% 3vw;
+        color: #fff;
+    }
+}
+
+.main-page{
+    padding: 2%;
+    text-align: center;
+    
+    .image-card{
+        margin: 1%;
+        display: inline-block;
+        width: 22%;
+    }
+}
+
+.preview-left-block, .preview-right-block{
+    display: inline-block;
+    padding-top: 10px;
+}
+
+.preview-left-block{
+    display: inline-block;
+    vertical-align: top;
+    width: 25%;
+}
+
+.preview-right-block{
+    display: inline-block;
+    width: 75%;
+}
+
+.material-picker{
+    display: block;
+}
+
+.background-color-block{
+    display: inline-block;
+    margin: 6px;
+}
+
+.background-color-text{
+    color: #000;
+}

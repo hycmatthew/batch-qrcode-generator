@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack serve --mode development",
+    "build": "webpack --mode production"
   },
   "keywords": [],
-  "author": "",
+  "author": "Chan Ho Yuen",
   "license": "ISC",
   "dependencies": {
     "@emotion/react": "^11.7.0",
