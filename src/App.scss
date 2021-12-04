@@ -1,30 +1,11 @@
-.main-menu-block{
-    width: 100%;
-    .main-menu-item{
-        width: 20%;
-        text-align: center;
-        display: inline-block;
-        font-size: 1.2vw;
-    }
+body{
+    margin: 0px !important;
 }
 
-.page-window{
-    object{
-        width: 80vw;
-        height: 50vh;
-    }
-}
-
-.preview-block{
-    margin: 0 auto;
-    img{
-        width: 100%;
-    }
-    canvas{
-        position: absolute; 
-        padding: 1%;
-        width: 70%;
-    }
+.root-background{
+    background-color: #4da6ff;
+    padding: 28px;
+    height: 100vh;
 }
 
 .top-menu{
@@ -35,14 +16,10 @@
 }
 
 .main-page{
-    padding: 2%;
-    text-align: center;
-    
-    .image-card{
-        margin: 1%;
-        display: inline-block;
-        width: 22%;
-    }
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
 }
 
 .preview-left-block, .preview-right-block{
@@ -53,12 +30,18 @@
 .preview-left-block{
     display: inline-block;
     vertical-align: top;
-    width: 25%;
+    width: 55%;
+    padding: 10px 20px;
 }
 
 .preview-right-block{
     display: inline-block;
-    width: 75%;
+    width: 30%;
+    padding: 10% 2%;
+
+    .preview-block canvas{
+        width: 100%;
+    }
 }
 
 .material-picker{

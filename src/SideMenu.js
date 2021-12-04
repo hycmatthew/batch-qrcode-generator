@@ -16,11 +16,14 @@ import TextField from '@mui/material/TextField';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import StarBorder from '@mui/icons-material/StarBorder';
+import Switch from '@mui/material/Switch';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 
 import Box from '@mui/material/Box';
 import { styled } from "@mui/styles";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Context } from "./CodeContext.js";
+import { CodeContext } from "./CodeContext.js";
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -30,9 +33,11 @@ export function SideMenu() {
     const initCodeList = new Map();
 
     const initCodeSetting = {
+        isBatch: false,
         inputText: "",
         containImage: false,
         codeSize: 1000,
+        imageSize: 100,
         codeColor: '#000000',
         backgroundColor: '#ffffff'
     }
@@ -44,7 +49,7 @@ export function SideMenu() {
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
 
-    const {state, dispatch} = useContext(Context);
+    const {state, dispatch} = useContext(CodeContext);
 
     const [codeList, setcodeList] = React.useState(initCodeList);
     const [codeSetting, setCodeSetting] = React.useState(initCodeSetting);
@@ -65,8 +70,9 @@ export function SideMenu() {
         return true
     }
 
-    const updateShowInputSetting = () => {
-        setShowInputSetting(!showInputSetting);
+    const updateQRCodeType = (e, type) => {
+        setCodeSetting(prevState => ({...prevState, isBatch: type}));
+        dispatch({ type: 'updateCodeType', isBatch: type});
     }
 
     const updateShowCodeSetting = () => {
@@ -77,25 +83,6 @@ export function SideMenu() {
         setShowImageSetting(!showImageSetting);
     }
 
-    const addBackgroundColorNum = () => {
-        let setNum = uuidv4();
-        let newList = [...colorList, { id: setNum, color: '#f9d39a', colorPos: 0 }];
-        setColorList(newList);
-    }
-
-    const deleteBackgroundColorNum = (num) => {
-        let newList = [...colorList];
-        newList.splice(num,1);
-        console.log("-"+num);
-        setColorList(newList);
-    }
-
-    const updateBackgroundType = (type) => {
-        let setType = parseInt(type);
-        setBackgroundType(setType);
-        dispatch({ type: 'updateBackgroundColor', backgroundType: type, backgroundColor: colorList});
-    };
-
     const updateInputText = (str) => {
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
@@ -103,42 +90,10 @@ export function SideMenu() {
         }, 500);
     }
 
-    const uploadImage = (e, deviceKey) =>{
-        dispatch({ type: 'updateInputImage', imageFiles: e.target.files[0], imageType: deviceKey, containImage: true});
-    }
-
-    const uploadBackgroundImage = (e) =>{
+    const uploadImage = (e) =>{
         if(ValidateFileUpload(e)){
-            console.log(e.target.files[0]);
-            dispatch({ type: 'updateBackgroundImage', backgroundImageFile: e.target.files[0]});
+            dispatch({ type: 'updateInputImage', imageFile: e.target.files[0], containImage: true});
         }
-    }
-
-    const backgroundColorBlockChange = (setId, colorHex) => {
-        clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
-            if(hexColorValidation(colorHex)){
-                let newList = colorList.map(item => {
-                    if(item.id === setId){
-                        item.color = colorHex
-                    }
-                    return item
-                });
-                updateBackgroundColor(backgroundType, newList);
-                setColorList(newList);
-            }
-        }, 8);
-    }
-
-    const backgroundColorPositionChange = (setId, pos) => {
-        let newList = colorList.map(item => {
-            if(item.id === setId){
-                item.colorPos = pos
-            }
-            return item
-        });
-        updateBackgroundColor(backgroundType, newList);
-        setColorList(newList);
     }
 
     const hexColorValidation = (color) =>{
@@ -153,8 +108,8 @@ export function SideMenu() {
         if(hexColorValidation(color)){
             clearTimeout(typingTimer);
             typingTimer = setTimeout(() => {
-                setTextSetting(prevState => ({...prevState, inputFontColor: color}));
-                dispatch({ type: 'updateTextFontColor', fontColor: color});
+                setCodeSetting(prevState => ({...prevState, codeColor: color}));
+                dispatch({ type: 'updateCodeColor', codeColor: color});
             }, 10);
         }
     }
@@ -163,89 +118,106 @@ export function SideMenu() {
         if(hexColorValidation(color)){
             clearTimeout(typingTimer);
             typingTimer = setTimeout(() => {
-                setTextSetting(prevState => ({...prevState, inputFontColor: color}));
-                dispatch({ type: 'updateTextFontColor', fontColor: color});
+                setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
+                dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
             }, 10);
         }
+    }
+
+    const updateCodeSize = (e, newSize) => {
+        setCodeSetting(prevState => ({ ...prevState, codeSize: newSize }))
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            dispatch({ type: 'updateCodeSize', codeSize: newSize});
+        }, 100);
+    }
+
+    const updateImageSize = (e, newSize) => {
+        setCodeSetting(prevState => ({ ...prevState, imageSize: newSize }))
+        clearTimeout(typingTimer);
+        typingTimer = setTimeout(() => {
+            dispatch({ type: 'updateImageSize', imageSize: newSize});
+        }, 100);
     }
     
     return (
         <ThemeProvider theme={theme}>
-            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">Screenshot Setup</ListSubheader>}>
-                <ListItemButton className="upload-image-submenu" onClick={ updateShowInputSetting }>
-                    <ListItemIcon><InboxIcon /></ListItemIcon>
-                    <ListItemText primary="Size" />
-                    {showInputSetting ? <ExpandLess /> : <ExpandMore />}
-                </ListItemButton>
+            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">QR Code Setup</ListSubheader>}>
+                <ListItem>
+                    <ToggleButtonGroup color="primary" value={codeSetting.isBatch} onChange={updateQRCodeType}  exclusive>
+                        <ToggleButton value={false}>Single</ToggleButton>
+                        <ToggleButton value={true}>Batch</ToggleButton>
+                    </ToggleButtonGroup>
+                </ListItem>
                 <Collapse in={showInputSetting} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                    <ListItem>
-                        <ListItemIcon><StarBorder /></ListItemIcon>
-                        <TextField size="small" fullWidth id="outlined-basic" label="Text" variant="outlined" onChange={e => updateInputText(e.target.value)} multiline rows={8} />
-                    </ListItem>
+                        <ListItem>
+                            <TextField size="small" fullWidth id="outlined-basic" label="Link" variant="outlined" onChange={e => updateInputText(e.target.value)} multiline rows={8} />
+                        </ListItem>
                     </List>
                 </Collapse>
                 <ListItemButton onClick={ updateShowCodeSetting }>
                     <ListItemIcon><InboxIcon /> </ListItemIcon>
-                    <ListItemText primary="Text" />
+                    <ListItemText primary="QR Code Color" />
                     {showCodeSetting ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
                 <Collapse in={showCodeSetting} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
-                    <ListItem>
-                        <div>
-                            <div className="background-color-block">
-                                <input id="color" type="color" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
+                        <ListItem>
+                            <div>
+                                <div className="background-color-block">
+                                    <input id="color" type="color" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
+                                </div>
+                                <TextField label="Code Color" size="small" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
                             </div>
-                            <TextField size="small" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
-                        </div>
-                    </ListItem>
-                    <ListItem>
-                        <div>
-                            <div className="background-color-block">
-                                <input id="color" type="color" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
+                        </ListItem>
+                        <ListItem>
+                            <div>
+                                <div className="background-color-block">
+                                    <input id="color" type="color" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
+                                </div>
+                                <TextField label="Background Color" size="small" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
                             </div>
-                            <TextField size="small" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
-                        </div>
-                    </ListItem>
-                    <ListItem>
-                        <Box sx={{ width: 250 }}>
-                            <Typography id="input-slider" gutterBottom>QR Code Size</Typography>
-                            <Grid container spacing={2} alignItems="center">
-                                <Grid item xs>
-                                    <Slider value={textSetting.inputFontSize}  aria-labelledby="input-slider" onChange={ e => updateTextFontSize(e.target.value) } />
-                                </Grid>
-                                <Grid item>
-                                    <Input value={textSetting.inputFontSize} size="small" onChange={ e => updateTextFontSize(e.target.value) } inputProps={{ step: 10,  min: 0, max: 100, type: 'number', 'aria-labelledby': 'input-slider', }} />
-                                </Grid>
-                            </Grid>
-                        </Box>
-                    </ListItem>
-                    <ListItemButton className="upload-image-submenu" onClick={ updateShowImageSetting }>
-                        <ListItemIcon><InboxIcon /> </ListItemIcon>
-                        <ListItemText primary="Screenshot" />
-                        {showImageSetting ? <ExpandLess /> : <ExpandMore />}
-                    </ListItemButton>
-                    <Collapse in={showImageSetting} timeout="auto" unmountOnExit>
-                        <List component="div" disablePadding>
-                            <ListItem>
-                                <input type="file" onChange={ (e)=>uploadImage(e)} />
-                            </ListItem>
-                            <ListItem>
-                                <Box sx={{ width: 250 }}>
-                                    <Typography id="input-slider" gutterBottom>Font Size</Typography>
-                                    <Grid container spacing={2} alignItems="center">
-                                        <Grid item xs>
-                                            <Slider value={textSetting.inputFontSize}  aria-labelledby="input-slider" onChange={ e => updateTextFontSize(e.target.value) } />
-                                        </Grid>
-                                        <Grid item>
-                                            <Input value={textSetting.inputFontSize} size="small" onChange={ e => updateTextFontSize(e.target.value) } inputProps={{ step: 10,  min: 0, max: 100, type: 'number', 'aria-labelledby': 'input-slider', }} />
-                                        </Grid>
+                        </ListItem>
+                        <ListItem>
+                            <Box sx={{ width: 250 }}>
+                                <Typography id="input-slider" gutterBottom>QR Code Size</Typography>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs>
+                                        <Slider min={100} step={100} max={2000} value={codeSetting.codeSize}  aria-labelledby="input-slider" onChange={ updateCodeSize } />
                                     </Grid>
-                                </Box>
-                            </ListItem>
-                        </List>
-                    </Collapse>
+                                    <Grid item>
+                                        <Input value={codeSetting.codeSize} size="small" onChange={ (e)=>updateCodeSize(e, e.target.value) } inputProps={{ step: 100,  min: 100, max: 2000, type: 'number', 'aria-labelledby': 'input-slider', }} />
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </ListItem>
+                    </List>
+                </Collapse>
+                <ListItem className="upload-image-submenu" onClick={ updateShowImageSetting }>
+                    <ListItemIcon><InboxIcon /> </ListItemIcon>
+                    <ListItemText primary="Logo Image" />
+                    <Switch defaultChecked checked={showImageSetting} onClick={updateShowImageSetting} />
+                    {showImageSetting ? <ExpandLess /> : <ExpandMore />}
+                </ListItem>
+                <Collapse in={showImageSetting} timeout="auto" unmountOnExit>
+                    <List component="div" disablePadding>
+                        <ListItem>
+                            <input type="file" accept="image/*" onChange={ (e)=>uploadImage(e)} />
+                        </ListItem>
+                        <ListItem>
+                            <Box sx={{ width: 250 }}>
+                                <Typography id="input-slider" gutterBottom>Logo Size</Typography>
+                                <Grid container spacing={2} alignItems="center">
+                                    <Grid item xs>
+                                        <Slider value={codeSetting.imageSize}  aria-labelledby="input-slider" onChange={ updateImageSize } />
+                                    </Grid>
+                                    <Grid item>
+                                        <Input value={codeSetting.imageSize} size="small" onChange={ (e)=>updateImageSize(e, e.target.value) } inputProps={{ step: 10,  min: 0, max: 100, type: 'number', 'aria-labelledby': 'input-slider', }} />
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </ListItem>
                     </List>
                 </Collapse>
             </List>
