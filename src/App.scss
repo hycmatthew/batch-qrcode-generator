@@ -36,11 +36,12 @@ body{
 
 .preview-right-block{
     display: inline-block;
-    width: 30%;
-    padding: 10% 2%;
+    width: 25%;
+    padding: 10% 5%;
 
     .preview-block canvas{
-        width: 100%;
+        width: 100% !important;
+        height: 100% !important;
     }
 }
 

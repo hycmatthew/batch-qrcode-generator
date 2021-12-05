@@ -11,7 +11,7 @@ const initialState = {
     imageSize: 50,
     codeColor: '#000000',
     backgroundColor: '#ffffff',
-    codeData: {}
+    inputText: ""
 };
 
 function dataReducer(state, action) {

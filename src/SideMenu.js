@@ -45,7 +45,6 @@ export function SideMenu() {
     const initColorLogicLogic = [{ id: 0, name: '#24C6DC', link: '#24C6DC' }];
     let typingTimer = null;
 
-    const [showInputSetting, setShowInputSetting] = React.useState(true);
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
 
@@ -84,6 +83,7 @@ export function SideMenu() {
     }
 
     const updateInputText = (str) => {
+        setCodeSetting(prevState => ({...prevState, inputText: str}));
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
             dispatch({ type: 'updateTextStr', inputText: str});
@@ -140,6 +140,15 @@ export function SideMenu() {
         }, 100);
     }
     
+    const updateInputTextField = () => {
+        if(codeSetting.isBatch === true){
+            return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={e => updateInputText(e.target.value)} multiline rows={10} placeholder="Seperate link and output image name by comma, example:
+https//example.com, image1, https//example2.com, image2" focused />);
+        }else{
+            return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={e => updateInputText(e.target.value)} multiline rows={4} />);
+        }
+    }
+
     return (
         <ThemeProvider theme={theme}>
             <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">QR Code Setup</ListSubheader>}>
@@ -149,13 +158,11 @@ export function SideMenu() {
                         <ToggleButton value={true}>Batch</ToggleButton>
                     </ToggleButtonGroup>
                 </ListItem>
-                <Collapse in={showInputSetting} timeout="auto" unmountOnExit>
-                    <List component="div" disablePadding>
-                        <ListItem>
-                            <TextField size="small" fullWidth id="outlined-basic" label="Link" variant="outlined" onChange={e => updateInputText(e.target.value)} multiline rows={8} />
-                        </ListItem>
-                    </List>
-                </Collapse>
+                <List component="div" disablePadding>
+                    <ListItem>
+                        { updateInputTextField() }
+                    </ListItem>
+                </List>
                 <ListItemButton onClick={ updateShowCodeSetting }>
                     <ListItemIcon><InboxIcon /> </ListItemIcon>
                     <ListItemText primary="QR Code Color" />
@@ -184,7 +191,7 @@ export function SideMenu() {
                                 <Typography id="input-slider" gutterBottom>QR Code Size</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
-                                        <Slider min={100} step={100} max={2000} value={codeSetting.codeSize}  aria-labelledby="input-slider" onChange={ updateCodeSize } />
+                                        <Slider min={100} step={100} max={2000} value={codeSetting.codeSize} aria-labelledby="input-slider" onChange={ updateCodeSize } />
                                     </Grid>
                                     <Grid item>
                                         <Input value={codeSetting.codeSize} size="small" onChange={ (e)=>updateCodeSize(e, e.target.value) } inputProps={{ step: 100,  min: 100, max: 2000, type: 'number', 'aria-labelledby': 'input-slider', }} />
@@ -197,7 +204,7 @@ export function SideMenu() {
                 <ListItem className="upload-image-submenu" onClick={ updateShowImageSetting }>
                     <ListItemIcon><InboxIcon /> </ListItemIcon>
                     <ListItemText primary="Logo Image" />
-                    <Switch defaultChecked checked={showImageSetting} onClick={updateShowImageSetting} />
+                    <Switch value={true} checked={showImageSetting} onClick={updateShowImageSetting} />
                     {showImageSetting ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={showImageSetting} timeout="auto" unmountOnExit>
