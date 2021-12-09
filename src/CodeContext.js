@@ -15,10 +15,11 @@ const initialState = {
 };
 
 function dataReducer(state, action) {
-    console.log(action);
     switch (action.type) {
         case 'updateCodeType':
             return { ...state, 'isBatch': action.isBatch};
+        case 'updateTextStr':
+            return { ...state, 'inputText': action.inputText};
         case 'updateCodeColor':
             return { ...state, 'codeColor': action.codeColor};
         case 'updateBackgroundColor':

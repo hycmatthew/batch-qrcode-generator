@@ -2,10 +2,11 @@ import React, { useEffect, useContext }  from "react";
 import { CodeContext } from "./CodeContext.js";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
+import { Link } from "react-router-dom";
 
 export function ImageLayer() {
     const { state, dispatch } = useContext(CodeContext);
-    const [codeLink, setCodeLink] = React.useState('https://www.w3schools.com/jsref/jsref_push.asp');
+    const [codeLink, setCodeLink] = React.useState('http://facebook.github.io/react/');
     const [imageSrc, setImageSrc] = React.useState('');
 
     var QRCode = require('qrcode.react');
@@ -23,7 +24,6 @@ export function ImageLayer() {
             reader.readAsDataURL(state.imageFile);
             screenImage.onload = function() {
                 setImageSrc(screenImage.src);
-                console.log(imageSrc);
             }
         }
         
@@ -39,12 +39,13 @@ export function ImageLayer() {
 
 
     const downloadLogic = () =>{
-        let canvas = document.getElementById("canvas-code");
-        let imageDL = canvas.toDataURL("image/png").split(',')[1];
         var zip = new JSZip();
-
-        zip.file("smile.png", imageDL, {base64: true});
-
+        let canvas = document.getElementById("canvas-code");
+        for(const item of codeList){
+            let createCode = <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
+            let imageDL = canvas.toDataURL("image/png").split(',')[1];
+            zip.file(item.name+".png", imageDL, {base64: true});
+        }
         zip.generateAsync({type:"blob"}).then(function(content) {
             saveAs(content, "example.zip");
         });
@@ -58,7 +59,7 @@ export function ImageLayer() {
     }
 
     const filenameValidationFunction = (name) => {
-        let regex = /^[<>:;,?\"*|/"]+$/;
+        let regex = /^[^<>:;,?\"*|/"]+$/;
         if(name.match(regex) && name.length < 220){
             return true;
         }
@@ -66,7 +67,7 @@ export function ImageLayer() {
     }
 
     const setLinkListAndFilenameLogic = (str) => {
-        
+        console.log("setLinkListAndFilenameLogic start");
         let isValid = true;
         let setlinkArr = str.split(",");
         let tempLinkList = [];
@@ -90,7 +91,9 @@ export function ImageLayer() {
                         break;
                     }
                 }
+                isLink = !isLink;
             }
+
             if(tempLinkList.length !== tempNameList.length){
                 isValid = false
             }
@@ -109,20 +112,21 @@ export function ImageLayer() {
             for(let item in tempLinkList){
                 tempCodeList.push({link: tempLinkList[item], filename: tempNameList[item]});
             }
-            codeList = tempCodeList;
         }
+        codeList = tempCodeList;
+        console.log(codeList);
         return isValid
     }
 
     const codeLogic = () => {
         if(imageSrc !== ''){
             return(
-                <QRCode id="canvas-code" size="1000" value="http://facebook.github.io/react/" bgColor={state.backgroundColor} fgColor={state.codeColor} 
+                <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} 
                     imageSettings={{src: imageSrc, width:400, height:400}}/>
             )
         }else{
             return(
-                <QRCode id="canvas-code" size="1000" value="http://facebook.github.io/react/" bgColor={state.backgroundColor} fgColor={state.codeColor} />
+                <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
             )
         }
     }
@@ -131,9 +135,12 @@ export function ImageLayer() {
         <div className="image-layer">
             <div className="preview-block">
                 {codeLogic()}
-                <canvas id="canvas-bg" styles="z-index: 1;"><img id="canvas-img-bg" /></canvas>
             </div>
-            <a onClick={downloadLogic}>123123</a>
+            <Link to={
+                {   pathname: "/download",
+                    state: { test123123: true }
+                }
+            }>123123</Link>
         </div>
     );
 }

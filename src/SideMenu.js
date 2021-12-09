@@ -15,7 +15,6 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import TextField from '@mui/material/TextField';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import StarBorder from '@mui/icons-material/StarBorder';
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
@@ -82,12 +81,13 @@ export function SideMenu() {
         setShowImageSetting(!showImageSetting);
     }
 
-    const updateInputText = (str) => {
+    const updateInputText = (e) => {
+        let str = e.target.value;
         setCodeSetting(prevState => ({...prevState, inputText: str}));
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
             dispatch({ type: 'updateTextStr', inputText: str});
-        }, 500);
+        }, 400);
     }
 
     const uploadImage = (e) =>{
@@ -140,12 +140,12 @@ export function SideMenu() {
         }, 100);
     }
     
-    const updateInputTextField = () => {
+    const setInputTextField = () => {
         if(codeSetting.isBatch === true){
-            return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={e => updateInputText(e.target.value)} multiline rows={10} placeholder="Seperate link and output image name by comma, example:
+            return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
 https//example.com, image1, https//example2.com, image2" focused />);
         }else{
-            return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={e => updateInputText(e.target.value)} multiline rows={4} />);
+            return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
         }
     }
 
@@ -160,7 +160,7 @@ https//example.com, image1, https//example2.com, image2" focused />);
                 </ListItem>
                 <List component="div" disablePadding>
                     <ListItem>
-                        { updateInputTextField() }
+                        { setInputTextField() }
                     </ListItem>
                 </List>
                 <ListItemButton onClick={ updateShowCodeSetting }>
