@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer, useContext }  from "react";
+import React, { useContext }  from "react";
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -79,6 +79,7 @@ export function SideMenu() {
 
     const updateShowImageSetting = () => {
         setShowImageSetting(!showImageSetting);
+        dispatch({ type: 'updateContainImage', containImage: !showImageSetting});
     }
 
     const updateInputText = (e) => {
@@ -92,7 +93,7 @@ export function SideMenu() {
 
     const uploadImage = (e) =>{
         if(ValidateFileUpload(e)){
-            dispatch({ type: 'updateInputImage', imageFile: e.target.files[0], containImage: true});
+            dispatch({ type: 'updateInputImage', imageFile: e.target.files[0], containImage: showImageSetting});
         }
     }
 
@@ -124,21 +125,24 @@ export function SideMenu() {
         }
     }
 
-    const updateCodeSize = (e, newSize) => {
-        setCodeSetting(prevState => ({ ...prevState, codeSize: newSize }))
+    const updateCodeSize = (e) => {
+        let sizeNum = parseInt(e.target.value);
+        setCodeSetting({...codeSetting, codeSize: sizeNum })
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
-            dispatch({ type: 'updateCodeSize', codeSize: newSize});
+            dispatch({ type: 'updateCodeSize', codeSize: sizeNum});
         }, 100);
     }
 
-    const updateImageSize = (e, newSize) => {
-        setCodeSetting(prevState => ({ ...prevState, imageSize: newSize }))
+    const updateImageSize = (e) => {
+        let sizeNum = parseInt(e.target.value);
+        setCodeSetting({...codeSetting, imageSize: sizeNum })
         clearTimeout(typingTimer);
         typingTimer = setTimeout(() => {
-            dispatch({ type: 'updateImageSize', imageSize: newSize});
+            dispatch({ type: 'updateImageSize', imageSize: sizeNum});
         }, 100);
     }
+
     
     const setInputTextField = () => {
         if(codeSetting.isBatch === true){
@@ -188,13 +192,13 @@ https//example.com, image1, https//example2.com, image2" focused />);
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
-                                <Typography id="input-slider" gutterBottom>QR Code Size</Typography>
+                                <Typography id="code-size-slider" gutterBottom>QR Code Size</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
-                                        <Slider min={100} step={100} max={2000} value={codeSetting.codeSize} aria-labelledby="input-slider" onChange={ updateCodeSize } />
+                                        <Slider min={400} step={100} max={2000} value={typeof codeSetting.codeSize === 'number' ? codeSetting.codeSize : 0} aria-labelledby="code-size-slider" onChange={ updateCodeSize } />
                                     </Grid>
                                     <Grid item>
-                                        <Input value={codeSetting.codeSize} size="small" onChange={ (e)=>updateCodeSize(e, e.target.value) } inputProps={{ step: 100,  min: 100, max: 2000, type: 'number', 'aria-labelledby': 'input-slider', }} />
+                                        <Input value={codeSetting.codeSize} size="small" onChange={ updateCodeSize } inputProps={{ step: 100,  min: 400, max: 2000, type: 'number', 'aria-labelledby': 'code-size-slider', }} />
                                     </Grid>
                                 </Grid>
                             </Box>
@@ -214,13 +218,13 @@ https//example.com, image1, https//example2.com, image2" focused />);
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
-                                <Typography id="input-slider" gutterBottom>Logo Size</Typography>
+                                <Typography id="image-size-slider" gutterBottom>Logo Size</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
-                                        <Slider value={codeSetting.imageSize}  aria-labelledby="input-slider" onChange={ updateImageSize } />
+                                        <Slider min={20} step={1} max={100} value={typeof codeSetting.imageSize === 'number' ? codeSetting.imageSize : 0}  aria-labelledby="image-size-slider" onChange={ updateImageSize } />
                                     </Grid>
                                     <Grid item>
-                                        <Input value={codeSetting.imageSize} size="small" onChange={ (e)=>updateImageSize(e, e.target.value) } inputProps={{ step: 10,  min: 0, max: 100, type: 'number', 'aria-labelledby': 'input-slider', }} />
+                                        <Input value={codeSetting.imageSize} size="small" onChange={ updateImageSize } inputProps={{ step: 1,  min: 20, max: 100, type: 'number', 'aria-labelledby': 'image-size-slider', }} />
                                     </Grid>
                                 </Grid>
                             </Box>

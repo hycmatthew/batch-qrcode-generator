@@ -1,6 +1,5 @@
 import React, { useEffect, useContext }  from "react";
 import { CodeContext } from "./CodeContext.js";
-import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import { Link } from "react-router-dom";
 
@@ -9,13 +8,15 @@ export function ImageLayer() {
     const [codeLink, setCodeLink] = React.useState('http://facebook.github.io/react/');
     const [imageSrc, setImageSrc] = React.useState('');
 
+    let codeList = [];
+    const [inputImageSize, setInputImageSize] = React.useState({width: 100, height: 100});
+    const [codeData, setCodeData] = React.useState([]);
+
     var QRCode = require('qrcode.react');
     const qrRef = React.useRef();
 
-    var codeList = [];
-
     useEffect(() => {
-        if(state.containImage){
+        if(state.containImage && state.imageFile !== ''){
             let screenImage = new Image();
             const reader = new FileReader();
             reader.onload=()=>{
@@ -23,6 +24,8 @@ export function ImageLayer() {
             }
             reader.readAsDataURL(state.imageFile);
             screenImage.onload = function() {
+                let setSize = {width: screenImage.naturalWidth, height: screenImage.height};
+                setInputImageSize(setSize)
                 setImageSrc(screenImage.src);
             }
         }
@@ -36,20 +39,6 @@ export function ImageLayer() {
             }
         }
     }, [state.isBatch, state.inputText]);
-
-
-    const downloadLogic = () =>{
-        var zip = new JSZip();
-        let canvas = document.getElementById("canvas-code");
-        for(const item of codeList){
-            let createCode = <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
-            let imageDL = canvas.toDataURL("image/png").split(',')[1];
-            zip.file(item.name+".png", imageDL, {base64: true});
-        }
-        zip.generateAsync({type:"blob"}).then(function(content) {
-            saveAs(content, "example.zip");
-        });
-    }
 
     const linkValidationFunction = (link) => {
         if(link.includes(".") && link.slice(link.length - 1)!=='.'){
@@ -67,7 +56,6 @@ export function ImageLayer() {
     }
 
     const setLinkListAndFilenameLogic = (str) => {
-        console.log("setLinkListAndFilenameLogic start");
         let isValid = true;
         let setlinkArr = str.split(",");
         let tempLinkList = [];
@@ -76,17 +64,18 @@ export function ImageLayer() {
 
         if(state.isBatch === true){
             for(const item of setlinkArr){
+                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
                 if(isLink){
-                    isValid = linkValidationFunction(item);
+                    isValid = linkValidationFunction(replacedStr);
                     if(isValid){
-                        tempLinkList.push(item);
+                        tempLinkList.push(replacedStr);
                     }else{
                         break;
                     }
                 }else{
-                    isValid = filenameValidationFunction(item);
+                    isValid = filenameValidationFunction(replacedStr);
                     if(isValid){
-                        tempNameList.push(item);
+                        tempNameList.push(replacedStr);
                     }else{
                         break;
                     }
@@ -99,8 +88,9 @@ export function ImageLayer() {
             }
         }else{
             for(const item of setlinkArr){
+                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
                 if(isLink){
-                    tempLinkList.push(item);
+                    tempLinkList.push(replacedStr);
                 }else{
                     tempNameList.push("qr-code");
                 }
@@ -114,19 +104,29 @@ export function ImageLayer() {
             }
         }
         codeList = tempCodeList;
+        setCodeData(codeList);
         console.log(codeList);
         return isValid
     }
 
     const codeLogic = () => {
-        if(imageSrc !== ''){
+        if(state.containImage && state.imageFile !== ''){
+            let imageRatio = inputImageSize.width/inputImageSize.height;
+            let setImageWidth = state.codeSize*state.imageSize/250;
+            let setImageHeight = setImageWidth/imageRatio;
+
+            if(imageRatio<1){
+                setImageHeight = state.codeSize*state.imageSize/250;
+                setImageWidth = setImageHeight/imageRatio;
+            }
+
             return(
-                <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} 
-                    imageSettings={{src: imageSrc, width:400, height:400}}/>
+                <QRCode id="canvas-code" level="H" size={state.codeSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} 
+                    imageSettings={{src: imageSrc, width:setImageWidth, height:setImageHeight}}/>
             )
         }else{
             return(
-                <QRCode id="canvas-code" size={1000} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
+                <QRCode id="canvas-code" level="H" size={state.codeSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
             )
         }
     }
@@ -136,11 +136,7 @@ export function ImageLayer() {
             <div className="preview-block">
                 {codeLogic()}
             </div>
-            <Link to={
-                {   pathname: "/download",
-                    state: { test123123: true }
-                }
-            }>123123</Link>
+            <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc}}>123123</Link>
         </div>
     );
 }

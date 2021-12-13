@@ -5,7 +5,7 @@ body{
 .root-background{
     background-color: #4da6ff;
     padding: 28px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .top-menu{
@@ -56,4 +56,31 @@ body{
 
 .background-color-text{
     color: #000;
+}
+
+.download-page{
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 12px;
+
+    .download-block{
+        height: 200px;
+        padding: 50px;
+        border-bottom: 2px;
+        text-align: center;
+
+        .download-btn{
+            color: #4da6ff;
+        }
+    }
+
+    .code-image-cell{
+        width: 12%;
+    }
+
+    .code-image-cell canvas{
+        width: 100% !important;
+        height: 100% !important;
+    }
 }

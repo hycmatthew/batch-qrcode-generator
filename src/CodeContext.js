@@ -5,7 +5,7 @@ export const CodeContext = React.createContext();
 
 const initialState = {
     isBatch: false,
-    imageFile: {},
+    imageFile: '',
     containImage: false,
     codeSize: 1000,
     imageSize: 50,
@@ -15,6 +15,7 @@ const initialState = {
 };
 
 function dataReducer(state, action) {
+    console.log(action);
     switch (action.type) {
         case 'updateCodeType':
             return { ...state, 'isBatch': action.isBatch};
@@ -28,6 +29,8 @@ function dataReducer(state, action) {
             return { ...state, 'codeSize': action.codeSize};
         case 'updateImageSize':
             return { ...state, 'imageSize': action.imageSize};
+        case 'updateContainImage':
+            return { ...state, 'containImage': action.containImage};    
         case 'updateInputImage':
             return { ...state, 'imageFile': action.imageFile, 'containImage': action.containImage};
         default: 

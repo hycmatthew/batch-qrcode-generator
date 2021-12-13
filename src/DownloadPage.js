@@ -3,64 +3,78 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import LoadingButton from '@mui/lab/LoadingButton';
+import DownloadIcon from '@mui/icons-material/Download';
+
 import { useLocation } from "react-router";
+import QRCode from "qrcode.react";
+import JSZip from "jszip";
 
 export function DownloadPage() {
 
     const location = useLocation();
-    console.log(location);
-    //const {codeList} = location.state;
+    const {codeState, codeData, imageSrc} = location.state;
 
-    function createData(name, calories, fat, carbs, protein) {
-        return { name, calories, fat, carbs, protein };
+    const [loading, setLoading] = React.useState(false);
+
+    const downloadLogic = () =>{
+        setLoading(true);
+        var zip = new JSZip();
+        let canvasList = document.getElementsByClassName("canvas-code");
+        for(const item of canvasList){
+            let imageDL = item.toDataURL("image/png").split(',')[1];
+            zip.file(item.id+".png", imageDL, {base64: true});
+        }
+        zip.generateAsync({type:"blob"}).then(function(content) {
+            setLoading(false);
+            saveAs(content, "example.zip");
+        });
     }
-      
-      const rows = [
-        createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-        createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-        createData('Eclair', 262, 16.0, 24, 6.0),
-        createData('Cupcake', 305, 3.7, 67, 4.3),
-        createData('Gingerbread', 356, 16.0, 49, 3.9),
-      ];
+
+    const codeLogic = (link, fileName) => {
+        if(codeState.containImage && imageSrc !== ''){
+            let imageRatio = inputImageSize.width/inputImageSize.height;
+            let setImageWidth = codeState.codeSize*codeState.imageSize/250;
+            let setImageHeight = setImageWidth/imageRatio;
+
+            if(imageRatio<1){
+                setImageHeight = codeState.codeSize*codeState.imageSize/250;
+                setImageWidth = setImageHeight/imageRatio;
+            }
+
+            return(
+                <QRCode className="canvas-code" id={fileName} level="H" size={codeState.codeSize} value={link} bgColor={codeState.backgroundColor} fgColor={codeState.codeColor} 
+                    imageSettings={{src: imageSrc, width:setImageWidth, height:setImageHeight}}/>
+            )
+        }else{
+            return(
+                <QRCode className="canvas-code" id={fileName} level="H" size={codeState.codeSize} value={link} bgColor={codeState.backgroundColor} fgColor={codeState.codeColor} />
+            )
+        }
+    }
 
     return (
-    <div className="download-page">
-        <div className="download-block">
-            <div className="download-btn"></div>
-        </div>
-        <div className="code-preview-list">
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                    <TableRow>
-                        <TableCell>Dessert (100g serving)</TableCell>
-                        <TableCell align="right">Calories</TableCell>
-                        <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                        <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                        <TableCell align="right">Protein&nbsp;(g)</TableCell>
-                    </TableRow>
-                    </TableHead>
-                    <TableBody>
-                    {rows.map((row) => (
-                        <TableRow
-                        key={row.name}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                        >
-                        <TableCell component="th" scope="row">
-                            {row.name}
-                        </TableCell>
-                        <TableCell align="right">{row.calories}</TableCell>
-                        <TableCell align="right">{row.fat}</TableCell>
-                        <TableCell align="right">{row.carbs}</TableCell>
-                        <TableCell align="right">{row.protein}</TableCell>
-                        </TableRow>
-                    ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+    <div className="root-background">
+        <div className="download-page">
+            <div className="download-block">
+                <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
+            </div>
+            <div className="code-preview-list">
+                <TableContainer>
+                    <Table aria-label="simple table">
+                        <TableBody>
+                            {codeData.map((item) => (
+                                <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                    <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
+                                    <TableCell align="right">{item.link}</TableCell>
+                                    <TableCell align="right">{item.filename}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </div>
         </div>
     </div>);
 }
