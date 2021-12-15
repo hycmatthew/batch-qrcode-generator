@@ -1,5 +1,5 @@
 body{
-    margin: 0px !important;
+    margin: 0px;
 }
 
 .root-background{
@@ -8,8 +8,14 @@ body{
     min-height: 100vh;
 }
 
-.top-menu{
+.top-nav{
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 2%;
+    
     Button{
+        font-size: 16px;
+        font-weight: 600;
         padding: 0% 3vw;
         color: #fff;
     }
@@ -30,18 +36,37 @@ body{
 .preview-left-block{
     display: inline-block;
     vertical-align: top;
-    width: 55%;
-    padding: 10px 20px;
+    width: 56%;
+    padding: 2%;
 }
 
 .preview-right-block{
     display: inline-block;
-    width: 25%;
-    padding: 10% 5%;
+    width: 36%;
+    padding: 5% 2%;
+    text-align: center;
+
+    .preview-block{
+        max-width: 300px;
+        margin: 40px auto;
+        padding: 4%;
+    }
 
     .preview-block canvas{
         width: 100% !important;
         height: 100% !important;
+    }
+
+    a:-webkit-any-link {
+        text-decoration: none !important;
+    }
+    
+    a:-moz-any-link {
+        text-decoration: none !important;
+    }
+    
+    a:any-link {
+        text-decoration: none !important;
     }
 }
 

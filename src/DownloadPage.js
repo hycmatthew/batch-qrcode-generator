@@ -7,11 +7,13 @@ import TableRow from '@mui/material/TableRow';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DownloadIcon from '@mui/icons-material/Download';
 
+import { TopNav } from './TopNav.js';
 import { useLocation } from "react-router";
 import QRCode from "qrcode.react";
 import JSZip from "jszip";
 
 export function DownloadPage() {
+    document.title = "Batch QR Code";
 
     const location = useLocation();
     const {codeState, codeData, imageSrc} = location.state;
@@ -28,7 +30,7 @@ export function DownloadPage() {
         }
         zip.generateAsync({type:"blob"}).then(function(content) {
             setLoading(false);
-            saveAs(content, "example.zip");
+            saveAs(content, "batchqrcode.zip");
         });
     }
 
@@ -56,6 +58,7 @@ export function DownloadPage() {
 
     return (
     <div className="root-background">
+        <TopNav/>
         <div className="download-page">
             <div className="download-block">
                 <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>

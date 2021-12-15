@@ -52,5 +52,6 @@ module.exports = {
         title: "React App",
         template: path.resolve(__dirname, './src/index.html'),
         filename: 'index.html',
+        favicon: "./image/qr-code-scan.png",
     }), new MiniCssExtractPlugin(), new webpack.HotModuleReplacementPlugin()]
 };

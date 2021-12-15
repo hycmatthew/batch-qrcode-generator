@@ -69,8 +69,10 @@ export function SideMenu() {
     }
 
     const updateQRCodeType = (e, type) => {
-        setCodeSetting(prevState => ({...prevState, isBatch: type}));
-        dispatch({ type: 'updateCodeType', isBatch: type});
+        if(type !== null){
+            setCodeSetting(prevState => ({...prevState, isBatch: type}));
+            dispatch({ type: 'updateCodeType', isBatch: type});
+        }
     }
 
     const updateShowCodeSetting = () => {

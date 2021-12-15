@@ -2,6 +2,7 @@ import React, { useEffect, useContext }  from "react";
 import { CodeContext } from "./CodeContext.js";
 import { saveAs } from 'file-saver';
 import { Link } from "react-router-dom";
+import Button from '@mui/material/Button';
 
 export function ImageLayer() {
     const { state, dispatch } = useContext(CodeContext);
@@ -131,12 +132,26 @@ export function ImageLayer() {
         }
     }
 
+    const dlButtonLogic = () =>{
+        if(codeData.length > 0){
+            return(
+                <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc}}>
+                    <Button variant="contained" disableElevation>Download</Button>
+                </Link>
+            )
+        }else{
+            return(
+                <Button variant="contained" disableElevation disabled>Download</Button>
+            )
+        }
+    }
+
     return (
         <div className="image-layer">
             <div className="preview-block">
-                {codeLogic()}
+                { codeLogic() }
             </div>
-            <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc}}>123123</Link>
+            { dlButtonLogic() }
         </div>
     );
 }
