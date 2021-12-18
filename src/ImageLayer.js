@@ -99,25 +99,26 @@ export function ImageLayer() {
             }
         }
         let tempCodeList = [];
+
         if(isValid){
-            for(let item in tempLinkList){
-                tempCodeList.push({link: tempLinkList[item], filename: tempNameList[item]});
+            for(const item in tempLinkList){
+                let setName = (item>=tempNameList.length)? "image-"+item: tempNameList[item]
+                tempCodeList.push({link: tempLinkList[item], filename: setName});
             }
         }
         codeList = tempCodeList;
         setCodeData(codeList);
-        console.log(codeList);
         return isValid
     }
 
     const codeLogic = () => {
         if(state.containImage && state.imageFile !== ''){
             let imageRatio = inputImageSize.width/inputImageSize.height;
-            let setImageWidth = state.codeSize*state.imageSize/250;
+            let setImageWidth = state.codeSize*state.imageSize/280;
             let setImageHeight = setImageWidth/imageRatio;
 
             if(imageRatio<1){
-                setImageHeight = state.codeSize*state.imageSize/250;
+                setImageHeight = state.codeSize*state.imageSize/280;
                 setImageWidth = setImageHeight/imageRatio;
             }
 
@@ -135,7 +136,7 @@ export function ImageLayer() {
     const dlButtonLogic = () =>{
         if(codeData.length > 0){
             return(
-                <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc}}>
+                <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc, inputImageSize: inputImageSize}}>
                     <Button variant="contained" disableElevation>Download</Button>
                 </Link>
             )

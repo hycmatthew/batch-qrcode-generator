@@ -1,9 +1,11 @@
+$mobile_size: 768px;
+
 body{
     margin: 0px;
 }
 
 .root-background{
-    background-color: #4da6ff;
+    background-color: #f4f6f9;
     padding: 28px;
     min-height: 100vh;
 }
@@ -18,6 +20,14 @@ body{
         font-weight: 600;
         padding: 0% 3vw;
         color: #fff;
+    }
+    a{
+        color: #2b3252;
+        text-decoration: none !important;
+    }
+    img{
+        width: 6%;
+        min-width: 64px;
     }
 }
 
@@ -38,6 +48,10 @@ body{
     vertical-align: top;
     width: 56%;
     padding: 2%;
+    @media (max-width: 768px) {
+        width: 92%;
+        padding: 4%;
+    }
 }
 
 .preview-right-block{
@@ -45,6 +59,11 @@ body{
     width: 36%;
     padding: 5% 2%;
     text-align: center;
+
+    @media (max-width: 768px) {
+        width: 92%;
+        padding: 4% 4% 18% 4%;
+    }
 
     .preview-block{
         max-width: 300px;
@@ -90,9 +109,10 @@ body{
     border-radius: 12px;
 
     .download-block{
-        height: 200px;
-        padding: 50px;
-        border-bottom: 2px;
+        height: 80px;
+        padding: 50px 0px;
+        margin: 0px 50px;
+        border-bottom: 1px solid #999;
         text-align: center;
 
         .download-btn{
@@ -100,12 +120,27 @@ body{
         }
     }
 
-    .code-image-cell{
-        width: 12%;
+    .code-preview-desc{
+        text-align: right;
+        padding: 0 12px;
+
+        p{
+            font-family: 'Trebuchet MS', sans-serif;
+            font-size: 18px;
+        }
     }
 
-    .code-image-cell canvas{
-        width: 100% !important;
-        height: 100% !important;
+    .code-preview-list{
+        padding: 0px 10px;
+
+        .code-image-cell{
+            width: 12%;
+            min-width: 100px;
+        }
+    
+        .code-image-cell canvas{
+            width: 100% !important;
+            height: 100% !important;
+        }
     }
 }

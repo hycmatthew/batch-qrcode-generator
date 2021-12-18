@@ -16,7 +16,7 @@ export function DownloadPage() {
     document.title = "Batch QR Code";
 
     const location = useLocation();
-    const {codeState, codeData, imageSrc} = location.state;
+    const {codeState, codeData, imageSrc, inputImageSize} = location.state;
 
     const [loading, setLoading] = React.useState(false);
 
@@ -35,6 +35,7 @@ export function DownloadPage() {
     }
 
     const codeLogic = (link, fileName) => {
+        console.log(inputImageSize);
         if(codeState.containImage && imageSrc !== ''){
             let imageRatio = inputImageSize.width/inputImageSize.height;
             let setImageWidth = codeState.codeSize*codeState.imageSize/250;
@@ -64,6 +65,9 @@ export function DownloadPage() {
                 <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
             </div>
             <div className="code-preview-list">
+                <div class="code-preview-desc">
+                    <p>Total {codeData.length} QR Codes.</p>
+                </div>
                 <TableContainer>
                     <Table aria-label="simple table">
                         <TableBody>
@@ -71,7 +75,7 @@ export function DownloadPage() {
                                 <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                                     <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
                                     <TableCell align="right">{item.link}</TableCell>
-                                    <TableCell align="right">{item.filename}</TableCell>
+                                    <TableCell align="right">{item.filename+".png"}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

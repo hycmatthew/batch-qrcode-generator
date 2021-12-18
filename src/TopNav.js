@@ -1,14 +1,16 @@
 import React from "react";
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import qrCodeIcon from "../image/qr-code-icon.png"
+import { Link } from "react-router-dom";
 
 export function TopNav() {
 
     return (
         <div className="top-nav">
             <Stack spacing={2} direction="row">
-                <Button variant="text">Generate QR Code</Button>
-                <Button variant="text">About This App</Button>
+                <img alt="Batch QR Code Icon" src={qrCodeIcon}/>
+                    <Button variant="text"><Link to="/">Generate QR Code</Link></Button>
             </Stack>
         </div>
     );

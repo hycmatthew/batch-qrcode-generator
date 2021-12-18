@@ -1,4 +1,4 @@
-import React, { useContext }  from "react";
+import React, { useContext, useEffect }  from "react";
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -13,11 +13,15 @@ import MuiInput from '@mui/material/Input';
 import Collapse from '@mui/material/Collapse';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import TextField from '@mui/material/TextField';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
+import Button from '@mui/material/Button';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import QrCodeScannerIcon from '@mui/icons-material/QrCodeScanner';
+import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 
 import Box from '@mui/material/Box';
 import { styled } from "@mui/styles";
@@ -42,8 +46,8 @@ export function SideMenu() {
     }
 
     const initColorLogicLogic = [{ id: 0, name: '#24C6DC', link: '#24C6DC' }];
-    let typingTimer = null;
 
+    const [typingTimer, setTypingTimer] = React.useState(null);
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
 
@@ -57,6 +61,10 @@ export function SideMenu() {
             fontSize: 12,
         },
     });
+
+    useEffect(() => {
+
+    }, [initCodeSetting])
 
     function ValidateFileUpload(e) {
         const imageFile = e.target.files[0];
@@ -87,10 +95,11 @@ export function SideMenu() {
     const updateInputText = (e) => {
         let str = e.target.value;
         setCodeSetting(prevState => ({...prevState, inputText: str}));
+
         clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
+        setTypingTimer(setTimeout(() => {
             dispatch({ type: 'updateTextStr', inputText: str});
-        }, 400);
+        }, 500));
     }
 
     const uploadImage = (e) =>{
@@ -110,20 +119,20 @@ export function SideMenu() {
     const updateCodeColor = (color) => {
         if(hexColorValidation(color)){
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => {
+            setTypingTimer(setTimeout(() => {
                 setCodeSetting(prevState => ({...prevState, codeColor: color}));
                 dispatch({ type: 'updateCodeColor', codeColor: color});
-            }, 10);
+            }, 10));
         }
     }
 
     const updateBackgroundColor = (color) => {
         if(hexColorValidation(color)){
             clearTimeout(typingTimer);
-            typingTimer = setTimeout(() => {
+            setTypingTimer(setTimeout(() => {
                 setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
                 dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
-            }, 10);
+            }, 10));
         }
     }
 
@@ -131,21 +140,20 @@ export function SideMenu() {
         let sizeNum = parseInt(e.target.value);
         setCodeSetting({...codeSetting, codeSize: sizeNum })
         clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
+        setTypingTimer(setTimeout(() => {
             dispatch({ type: 'updateCodeSize', codeSize: sizeNum});
-        }, 100);
+        }, 200));
     }
 
     const updateImageSize = (e) => {
         let sizeNum = parseInt(e.target.value);
         setCodeSetting({...codeSetting, imageSize: sizeNum })
         clearTimeout(typingTimer);
-        typingTimer = setTimeout(() => {
+        setTypingTimer(setTimeout(() => {
             dispatch({ type: 'updateImageSize', imageSize: sizeNum});
-        }, 100);
+        }, 200));
     }
 
-    
     const setInputTextField = () => {
         if(codeSetting.isBatch === true){
             return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
@@ -170,7 +178,7 @@ https//example.com, image1, https//example2.com, image2" focused />);
                     </ListItem>
                 </List>
                 <ListItemButton onClick={ updateShowCodeSetting }>
-                    <ListItemIcon><InboxIcon /> </ListItemIcon>
+                    <ListItemIcon><QrCodeScannerIcon /> </ListItemIcon>
                     <ListItemText primary="QR Code Color" />
                     {showCodeSetting ? <ExpandLess /> : <ExpandMore />}
                 </ListItemButton>
@@ -208,7 +216,7 @@ https//example.com, image1, https//example2.com, image2" focused />);
                     </List>
                 </Collapse>
                 <ListItem className="upload-image-submenu" onClick={ updateShowImageSetting }>
-                    <ListItemIcon><InboxIcon /> </ListItemIcon>
+                    <ListItemIcon><InsertPhotoIcon /> </ListItemIcon>
                     <ListItemText primary="Logo Image" />
                     <Switch value={true} checked={showImageSetting} onClick={updateShowImageSetting} />
                     {showImageSetting ? <ExpandLess /> : <ExpandMore />}
@@ -216,7 +224,10 @@ https//example.com, image1, https//example2.com, image2" focused />);
                 <Collapse in={showImageSetting} timeout="auto" unmountOnExit>
                     <List component="div" disablePadding>
                         <ListItem>
-                            <input type="file" accept="image/*" onChange={ (e)=>uploadImage(e)} />
+                            <label htmlFor="contained-button-file">
+                                <Input accept="image/*" id="contained-button-file" style={{display: 'none'}} type="file" onChange={ (e)=>uploadImage(e)} />
+                                <Button variant="contained" component="span">Upload</Button>
+                            </label>
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
