@@ -11,7 +11,6 @@ import Slider from '@mui/material/Slider';
 import MuiInput from '@mui/material/Input';
 
 import Collapse from '@mui/material/Collapse';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import TextField from '@mui/material/TextField';
 import Switch from '@mui/material/Switch';
 import ToggleButton from '@mui/material/ToggleButton';
@@ -27,13 +26,9 @@ import Box from '@mui/material/Box';
 import { styled } from "@mui/styles";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CodeContext } from "./CodeContext.js";
-import { v4 as uuidv4 } from 'uuid';
-
 
 export function SideMenu() {
     const Input = styled(MuiInput)`width: 42px;`;
-
-    const initCodeList = new Map();
 
     const initCodeSetting = {
         isBatch: false,
@@ -45,26 +40,20 @@ export function SideMenu() {
         backgroundColor: '#ffffff'
     }
 
-    const initColorLogicLogic = [{ id: 0, name: '#24C6DC', link: '#24C6DC' }];
-
     const [typingTimer, setTypingTimer] = React.useState(null);
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
 
     const {state, dispatch} = useContext(CodeContext);
 
-    const [codeList, setcodeList] = React.useState(initCodeList);
     const [codeSetting, setCodeSetting] = React.useState(initCodeSetting);
+    const [errorType, setErrorType] = React.useState(0);
 
     const theme = createTheme({
         typography: {
             fontSize: 12,
         },
     });
-
-    useEffect(() => {
-
-    }, [initCodeSetting])
 
     function ValidateFileUpload(e) {
         const imageFile = e.target.files[0];
@@ -74,6 +63,103 @@ export function SideMenu() {
             return false;
         }
         return true
+    }
+
+    const suffixDuplicates = (list) => {
+        let countMap = new Map();
+
+        for(const index in list){
+            let item = list[index];
+            if(countMap.has(item)){
+                let value = countMap.get(item)+1;
+                countMap.set(item, value);
+                list[index] = item+"-"+value;
+            }else{
+                countMap.set(item, 0);
+            }  
+        }
+        return list;
+    }
+
+    const linkValidationFunction = (link) => {
+        if(link.includes(".") && link.slice(link.length - 1)!=='.'){
+            return true;
+        }
+        return false;
+    }
+
+    const filenameValidationFunction = (name) => {
+        let regex = /^[^<>:;,?\"*|/"]+$/;
+        if(name.match(regex) && name.length < 220){
+            return true;
+        }
+        return false;
+    }
+
+    const setLinkListAndFilenameLogic = (str) => {
+        let isValid = true;
+        let setlinkArr = str.split(",");
+        let tempLinkList = [];
+        let tempNameList = [];
+        let isLink = true;
+
+        if(state.isBatch === true){
+            for(const item of setlinkArr){
+                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
+                if(isLink){
+                    isValid = linkValidationFunction(replacedStr);
+                    if(isValid){
+                        tempLinkList.push(replacedStr);
+                    }else{
+                        setErrorType(1);
+                        break;
+                    }
+                }else{
+                    isValid = filenameValidationFunction(replacedStr);
+                    if(isValid){
+                        tempNameList.push(replacedStr);
+                    }else{
+                        setErrorType(2);
+                        break;
+                    }
+                }
+                isLink = !isLink;
+            }
+
+            if(tempLinkList.length !== tempNameList.length){
+                isValid = false
+            }
+        }else{
+            for(const item of setlinkArr){
+                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
+                const isValid = linkValidationFunction(replacedStr);
+                if(isValid){
+                    tempLinkList.push(replacedStr);
+                }else{
+                    setErrorType(1);
+                }
+                break;
+            }
+        }
+        let tempCodeList = [];
+
+        if(tempLinkList.length>200){
+            setErrorType(3);
+            isValid = false;
+        }
+
+        if(isValid){
+            const resultNameList = suffixDuplicates(tempNameList);
+            for(const item in tempLinkList){
+                let setName = (item>=resultNameList.length)? "image-"+item: resultNameList[item]
+                tempCodeList.push({link: tempLinkList[item], filename: setName});
+            }
+        }
+        if(str === ""){
+            setErrorType(0);
+        }
+
+        return tempCodeList
     }
 
     const updateQRCodeType = (e, type) => {
@@ -98,7 +184,15 @@ export function SideMenu() {
 
         clearTimeout(typingTimer);
         setTypingTimer(setTimeout(() => {
-            dispatch({ type: 'updateTextStr', inputText: str});
+            console.log(str)
+            const resultCodeData = setLinkListAndFilenameLogic(str);
+            console.log(resultCodeData)
+            if(resultCodeData.length > 0){
+                setErrorType(0);
+                dispatch({ type: 'updateCodeData', codeData: resultCodeData});
+            }else{
+                dispatch({ type: 'updateCodeData', codeData: []});
+            }
         }, 500));
     }
 
@@ -154,12 +248,34 @@ export function SideMenu() {
         }, 200));
     }
 
+    const helperTextLogic = () => {
+        switch(errorType){
+            case 1:
+                return "Incorrect link format.";
+            case 2:
+                return "Incorrect filename format.";
+            case 3:
+                return "More than 200 links.";
+        }
+    }
+
     const setInputTextField = () => {
-        if(codeSetting.isBatch === true){
-            return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
-https//example.com, image1, https//example2.com, image2" focused />);
+        if(errorType === 0){
+            if(codeSetting.isBatch === true){
+                return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
+    https//example.com, image1, https//example2.com, image2
+    Support up to 200 links at once" focused />);
+            }else{
+                return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
+            }
         }else{
-            return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
+            if(codeSetting.isBatch === true){
+                return(<TextField fullWidth error helperText={helperTextLogic()} id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
+    https//example.com, image1, https//example2.com, image2
+    Support up to 200 links at once" focused />);
+            }else{
+                return(<TextField fullWidth error helperText={helperTextLogic()} id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
+            }
         }
     }
 

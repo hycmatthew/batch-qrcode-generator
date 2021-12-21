@@ -35,7 +35,6 @@ export function DownloadPage() {
     }
 
     const codeLogic = (link, fileName) => {
-        console.log(inputImageSize);
         if(codeState.containImage && imageSrc !== ''){
             let imageRatio = inputImageSize.width/inputImageSize.height;
             let setImageWidth = codeState.codeSize*codeState.imageSize/250;
@@ -45,7 +44,6 @@ export function DownloadPage() {
                 setImageHeight = codeState.codeSize*codeState.imageSize/250;
                 setImageWidth = setImageHeight/imageRatio;
             }
-
             return(
                 <QRCode className="canvas-code" id={fileName} level="H" size={codeState.codeSize} value={link} bgColor={codeState.backgroundColor} fgColor={codeState.codeColor} 
                     imageSettings={{src: imageSrc, width:setImageWidth, height:setImageHeight}}/>

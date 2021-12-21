@@ -8,10 +8,10 @@ const initialState = {
     imageFile: '',
     containImage: false,
     codeSize: 1000,
-    imageSize: 50,
+    imageSize: 100,
     codeColor: '#000000',
     backgroundColor: '#ffffff',
-    inputText: ""
+    codeData: {}
 };
 
 function dataReducer(state, action) {
@@ -19,8 +19,8 @@ function dataReducer(state, action) {
     switch (action.type) {
         case 'updateCodeType':
             return { ...state, 'isBatch': action.isBatch};
-        case 'updateTextStr':
-            return { ...state, 'inputText': action.inputText};
+        case 'updateCodeData':
+            return { ...state, 'codeData': action.codeData};
         case 'updateCodeColor':
             return { ...state, 'codeColor': action.codeColor};
         case 'updateBackgroundColor':

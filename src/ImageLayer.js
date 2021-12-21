@@ -1,6 +1,5 @@
 import React, { useEffect, useContext }  from "react";
 import { CodeContext } from "./CodeContext.js";
-import { saveAs } from 'file-saver';
 import { Link } from "react-router-dom";
 import Button from '@mui/material/Button';
 
@@ -9,12 +8,9 @@ export function ImageLayer() {
     const [codeLink, setCodeLink] = React.useState('http://facebook.github.io/react/');
     const [imageSrc, setImageSrc] = React.useState('');
 
-    let codeList = [];
     const [inputImageSize, setInputImageSize] = React.useState({width: 100, height: 100});
-    const [codeData, setCodeData] = React.useState([]);
 
     var QRCode = require('qrcode.react');
-    const qrRef = React.useRef();
 
     useEffect(() => {
         if(state.containImage && state.imageFile !== ''){
@@ -34,82 +30,11 @@ export function ImageLayer() {
     }, [state.containImage, state.imageFile]);
 
     useEffect(() => {
-        if(state.inputText.length > 0){
-            if(setLinkListAndFilenameLogic(state.inputText)){
-                setCodeLink(codeList[0].link);
-            }
+        console.log(state.codeData.length);
+        if(state.codeData.length > 0){
+            setCodeLink(state.codeData[0].link);
         }
-    }, [state.isBatch, state.inputText]);
-
-    const linkValidationFunction = (link) => {
-        if(link.includes(".") && link.slice(link.length - 1)!=='.'){
-            return true;
-        }
-        return false;
-    }
-
-    const filenameValidationFunction = (name) => {
-        let regex = /^[^<>:;,?\"*|/"]+$/;
-        if(name.match(regex) && name.length < 220){
-            return true;
-        }
-        return false;
-    }
-
-    const setLinkListAndFilenameLogic = (str) => {
-        let isValid = true;
-        let setlinkArr = str.split(",");
-        let tempLinkList = [];
-        let tempNameList = [];
-        let isLink = true;
-
-        if(state.isBatch === true){
-            for(const item of setlinkArr){
-                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
-                if(isLink){
-                    isValid = linkValidationFunction(replacedStr);
-                    if(isValid){
-                        tempLinkList.push(replacedStr);
-                    }else{
-                        break;
-                    }
-                }else{
-                    isValid = filenameValidationFunction(replacedStr);
-                    if(isValid){
-                        tempNameList.push(replacedStr);
-                    }else{
-                        break;
-                    }
-                }
-                isLink = !isLink;
-            }
-
-            if(tempLinkList.length !== tempNameList.length){
-                isValid = false
-            }
-        }else{
-            for(const item of setlinkArr){
-                let replacedStr = item.replace(/(\r\n|\n|\r)/gm,"");
-                if(isLink){
-                    tempLinkList.push(replacedStr);
-                }else{
-                    tempNameList.push("qr-code");
-                }
-                isLink = !isLink;
-            }
-        }
-        let tempCodeList = [];
-
-        if(isValid){
-            for(const item in tempLinkList){
-                let setName = (item>=tempNameList.length)? "image-"+item: tempNameList[item]
-                tempCodeList.push({link: tempLinkList[item], filename: setName});
-            }
-        }
-        codeList = tempCodeList;
-        setCodeData(codeList);
-        return isValid
-    }
+    }, [state.isBatch, state.codeData]);
 
     const codeLogic = () => {
         if(state.containImage && state.imageFile !== ''){
@@ -134,9 +59,9 @@ export function ImageLayer() {
     }
 
     const dlButtonLogic = () =>{
-        if(codeData.length > 0){
+        if(state.codeData.length > 0){
             return(
-                <Link to="/download" state={{ codeState: state , codeData: codeData, imageSrc: imageSrc, inputImageSize: inputImageSize}}>
+                <Link to="/download" state={{ codeState: state, imageSrc: imageSrc, inputImageSize: inputImageSize}}>
                     <Button variant="contained" disableElevation>Download</Button>
                 </Link>
             )
