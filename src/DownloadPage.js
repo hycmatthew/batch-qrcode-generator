@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -11,23 +11,47 @@ import { TopNav } from './TopNav.js';
 import { useLocation } from "react-router";
 import QRCode from "qrcode.react";
 import JSZip from "jszip";
+import { saveAs } from 'file-saver';
 
 export function DownloadPage() {
     document.title = "Batch QR Code";
 
     const location = useLocation();
-    const {codeState, codeData, imageSrc, inputImageSize} = location.state;
+    const {codeState, imageSrc, inputImageSize} = location.state;
 
     const [loading, setLoading] = React.useState(false);
+    /*
+    useEffect(() => {
+        if(loading === true){
+            console.log("effect = "+new Date());
+            (async() => {
+                let test = await downloadLogic();
+            })();
+        }
+    },[loading]);*/
 
-    const downloadLogic = () =>{
-        setLoading(true);
-        var zip = new JSZip();
+    /*
+    const updateLoading = () => {
+        if(loading === false){
+            setLoading(true);
+        }
+    }*/
+
+    const convertCanvasToImage = async() => {
+        let zip = new JSZip();
         let canvasList = document.getElementsByClassName("canvas-code");
         for(const item of canvasList){
             let imageDL = item.toDataURL("image/png").split(',')[1];
             zip.file(item.id+".png", imageDL, {base64: true});
+            console.log(item.id);
         }
+        return zip
+    }
+
+    const downloadLogic = async() => {
+        setLoading(true);
+        let zip = await convertCanvasToImage();
+
         zip.generateAsync({type:"blob"}).then(function(content) {
             setLoading(false);
             saveAs(content, "batchqrcode.zip");
@@ -63,13 +87,13 @@ export function DownloadPage() {
                 <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
             </div>
             <div className="code-preview-list">
-                <div class="code-preview-desc">
-                    <p>Total {codeData.length} QR Codes.</p>
+                <div className="code-preview-desc">
+                    <p>Total {codeState.codeData.length} QR Codes.</p>
                 </div>
                 <TableContainer>
                     <Table aria-label="simple table">
                         <TableBody>
-                            {codeData.map((item) => (
+                            {codeState.codeData.map((item) => (
                                 <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
                                     <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
                                     <TableCell align="right">{item.link}</TableCell>

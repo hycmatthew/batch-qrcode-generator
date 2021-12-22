@@ -184,9 +184,8 @@ export function SideMenu() {
 
         clearTimeout(typingTimer);
         setTypingTimer(setTimeout(() => {
-            console.log(str)
             const resultCodeData = setLinkListAndFilenameLogic(str);
-            console.log(resultCodeData)
+            
             if(resultCodeData.length > 0){
                 setErrorType(0);
                 dispatch({ type: 'updateCodeData', codeData: resultCodeData});
@@ -263,16 +262,16 @@ export function SideMenu() {
         if(errorType === 0){
             if(codeSetting.isBatch === true){
                 return(<TextField fullWidth id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
-    https//example.com, image1, https//example2.com, image2
-    Support up to 200 links at once" focused />);
+https//example.com, image1, https//example2.com, image2
+Support up to 200 links at once" focused />);
             }else{
                 return(<TextField fullWidth id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
             }
         }else{
             if(codeSetting.isBatch === true){
                 return(<TextField fullWidth error helperText={helperTextLogic()} id="outlined-basic" label="Links and output filenames" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={10} placeholder="Seperate link and output image name by comma, example:
-    https//example.com, image1, https//example2.com, image2
-    Support up to 200 links at once" focused />);
+https//example.com, image1, https//example2.com, image2
+Support up to 200 links at once" focused />);
             }else{
                 return(<TextField fullWidth error helperText={helperTextLogic()} id="outlined-basic" label="Link" variant="outlined" value={codeSetting.inputText} onChange={ updateInputText } multiline rows={4} />);
             }
