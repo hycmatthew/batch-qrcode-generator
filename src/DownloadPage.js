@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -20,42 +20,31 @@ export function DownloadPage() {
     const {codeState, imageSrc, inputImageSize} = location.state;
 
     const [loading, setLoading] = React.useState(false);
-    /*
-    useEffect(() => {
-        if(loading === true){
-            console.log("effect = "+new Date());
-            (async() => {
-                let test = await downloadLogic();
-            })();
-        }
-    },[loading]);*/
 
-    /*
-    const updateLoading = () => {
-        if(loading === false){
-            setLoading(true);
-        }
-    }*/
-
-    const convertCanvasToImage = async() => {
+    const downloadLogic = () => {
+        setLoading(true);
         let zip = new JSZip();
         let canvasList = document.getElementsByClassName("canvas-code");
-        for(const item of canvasList){
-            let imageDL = item.toDataURL("image/png").split(',')[1];
-            zip.file(item.id+".png", imageDL, {base64: true});
-            console.log(item.id);
-        }
-        return zip
-    }
+        let setImageSize = codeState.codeSize;
 
-    const downloadLogic = async() => {
-        setLoading(true);
-        let zip = await convertCanvasToImage();
+        setTimeout(() => {
+            for(const item of canvasList){
+                var canvas = document.createElement('canvas');
+                canvas.width = setImageSize;
+                canvas.height = setImageSize;
 
-        zip.generateAsync({type:"blob"}).then(function(content) {
-            setLoading(false);
-            saveAs(content, "batchqrcode.zip");
-        });
+                var context = canvas.getContext('2d');
+                context.drawImage(item, 0, 0, setImageSize, setImageSize);
+
+                let imageDL = canvas.toDataURL("image/png").split(',')[1];
+                zip.file(item.id+".png", imageDL, {base64: true});
+            }
+    
+            zip.generateAsync({type:"blob"}).then(function(content) {
+                setLoading(false);
+                saveAs(content, "batchqrcode.zip");
+            });
+        }, 300);
     }
 
     const codeLogic = (link, fileName) => {
