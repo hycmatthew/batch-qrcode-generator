@@ -43,11 +43,14 @@ export function SideMenu() {
     const [typingTimer, setTypingTimer] = React.useState(null);
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
+    const [testColor, setTestColor] = React.useState("#000000");
 
     const {state, dispatch} = useContext(CodeContext);
 
     const [codeSetting, setCodeSetting] = React.useState(initCodeSetting);
     const [errorType, setErrorType] = React.useState(0);
+
+    let colorTimer = null;
 
     const theme = createTheme({
         typography: {
@@ -98,7 +101,8 @@ export function SideMenu() {
 
     const setLinkListAndFilenameLogic = (str) => {
         let isValid = true;
-        let setlinkArr = str.split(",");
+        let setStr = str.trim().replace(/,*$/, "");
+        let setlinkArr = setStr.split(",");
         let tempLinkList = [];
         let tempNameList = [];
         let isLink = true;
@@ -158,7 +162,7 @@ export function SideMenu() {
         if(str === ""){
             setErrorType(0);
         }
-
+        console.log(tempCodeList);
         return tempCodeList
     }
 
@@ -209,24 +213,26 @@ export function SideMenu() {
         return false
     }
 
-    const updateCodeColor = (color) => {
-        if(hexColorValidation(color)){
-            clearTimeout(typingTimer);
-            setTypingTimer(setTimeout(() => {
-                setCodeSetting(prevState => ({...prevState, codeColor: color}));
-                dispatch({ type: 'updateCodeColor', codeColor: color});
-            }, 10));
-        }
+    const updateCodeColor = (e) => {
+        const color = e.target.value;
+        
+        clearTimeout(colorTimer);
+        colorTimer = setTimeout(() => {
+            console.log(new Date());
+            dispatch({ type: 'updateCodeColor', codeColor: color});
+            setCodeSetting(prevState => ({...prevState, codeColor: color}));
+        }, 50);
     }
 
-    const updateBackgroundColor = (color) => {
-        if(hexColorValidation(color)){
-            clearTimeout(typingTimer);
-            setTypingTimer(setTimeout(() => {
-                setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
-                dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
-            }, 10));
-        }
+    const updateBackgroundColor = (e) => {
+        const color = e.target.value;
+
+        clearTimeout(colorTimer);
+        colorTimer = setTimeout(() => {
+            console.log(new Date());
+            setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
+            dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
+        }, 50);
     }
 
     const updateCodeSize = (e) => {
@@ -280,7 +286,7 @@ Support up to 200 links at once" focused />);
 
     return (
         <ThemeProvider theme={theme}>
-            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">QR Code Setup</ListSubheader>}>
+            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">QR Code Setting</ListSubheader>}>
                 <ListItem>
                     <ToggleButtonGroup color="primary" value={codeSetting.isBatch} onChange={updateQRCodeType}  exclusive>
                         <ToggleButton value={false}>Single</ToggleButton>
@@ -302,17 +308,17 @@ Support up to 200 links at once" focused />);
                         <ListItem>
                             <div>
                                 <div className="background-color-block">
-                                    <input id="color" type="color" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
+                                    <input id="color" type="color" value={codeSetting.codeColor} onChange={updateCodeColor}/>
                                 </div>
-                                <TextField label="Code Color" size="small" value={codeSetting.codeColor} onChange={e => updateCodeColor(e.target.value)}/>
+                                <TextField label="Code Color" size="small" value={codeSetting.codeColor} inputProps={{maxLength: 7}} onChange={updateCodeColor}/>
                             </div>
                         </ListItem>
                         <ListItem>
                             <div>
                                 <div className="background-color-block">
-                                    <input id="color" type="color" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
+                                    <input id="color" type="color" value={codeSetting.backgroundColor} onChange={updateBackgroundColor}/>
                                 </div>
-                                <TextField label="Background Color" size="small" value={codeSetting.backgroundColor} onChange={e => updateBackgroundColor(e.target.value)}/>
+                                <TextField label="Background Color" size="small" value={codeSetting.backgroundColor} inputProps={{maxLength: 7}} onChange={updateBackgroundColor}/>
                             </div>
                         </ListItem>
                         <ListItem>

@@ -30,7 +30,6 @@ export function ImageLayer() {
     }, [state.containImage, state.imageFile]);
 
     useEffect(() => {
-        console.log(state.codeData.length);
         if(state.codeData.length > 0){
             setCodeLink(state.codeData[0].link);
         }

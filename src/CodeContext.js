@@ -15,7 +15,6 @@ const initialState = {
 };
 
 function dataReducer(state, action) {
-    console.log(action);
     switch (action.type) {
         case 'updateCodeType':
             return { ...state, 'isBatch': action.isBatch};
