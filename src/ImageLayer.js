@@ -5,12 +5,13 @@ import Button from '@mui/material/Button';
 
 export function ImageLayer() {
     const { state, dispatch } = useContext(CodeContext);
-    const [codeLink, setCodeLink] = React.useState('http://facebook.github.io/react/');
+    const [codeLink, setCodeLink] = React.useState('https://batchqrcode.com/');
     const [imageSrc, setImageSrc] = React.useState('');
 
     const [inputImageSize, setInputImageSize] = React.useState({width: 100, height: 100});
 
     var QRCode = require('qrcode.react');
+    const codeStaticSize = 1000;
 
     useEffect(() => {
         if(state.containImage && state.imageFile !== ''){
@@ -38,21 +39,21 @@ export function ImageLayer() {
     const codeLogic = () => {
         if(state.containImage && state.imageFile !== ''){
             let imageRatio = inputImageSize.width/inputImageSize.height;
-            let setImageWidth = state.codeSize*state.imageSize/280;
+            let setImageWidth = codeStaticSize*state.imageSize/280;
             let setImageHeight = setImageWidth/imageRatio;
 
             if(imageRatio<1){
-                setImageHeight = state.codeSize*state.imageSize/280;
+                setImageHeight = codeStaticSize*state.imageSize/280;
                 setImageWidth = setImageHeight/imageRatio;
             }
 
             return(
-                <QRCode id="canvas-code" level="H" size={state.codeSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} 
+                <QRCode id="canvas-code" level="H" size={codeStaticSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} 
                     imageSettings={{src: imageSrc, width:setImageWidth, height:setImageHeight}}/>
             )
         }else{
             return(
-                <QRCode id="canvas-code" level="H" size={state.codeSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
+                <QRCode id="canvas-code" level="H" size={codeStaticSize} value={codeLink} bgColor={state.backgroundColor} fgColor={state.codeColor} />
             )
         }
     }

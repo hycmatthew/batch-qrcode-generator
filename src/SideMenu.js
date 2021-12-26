@@ -323,7 +323,7 @@ Support up to 200 links at once" focused />);
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
-                                <Typography id="code-size-slider" gutterBottom>QR Code Size</Typography>
+                                <Typography id="code-size-slider" gutterBottom>QR Code Size (In Pixel)</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
                                         <Slider min={400} step={100} max={2000} value={typeof codeSetting.codeSize === 'number' ? codeSetting.codeSize : 0} aria-labelledby="code-size-slider" onChange={ updateCodeSize } />
@@ -352,7 +352,7 @@ Support up to 200 links at once" focused />);
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
-                                <Typography id="image-size-slider" gutterBottom>Logo Size</Typography>
+                                <Typography id="image-size-slider" gutterBottom>Logo Size (In Pixel)</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
                                         <Slider min={20} step={1} max={100} value={typeof codeSetting.imageSize === 'number' ? codeSetting.imageSize : 0}  aria-labelledby="image-size-slider" onChange={ updateImageSize } />

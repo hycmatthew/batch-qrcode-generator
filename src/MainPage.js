@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { SideMenu } from './SideMenu.js';
 import { TopNav } from './TopNav.js';
 import { ImageLayer } from "./ImageLayer.js";
+import { HowToUse } from "./HowToUse.js";
+import { Footer } from "./Footer.js";
 
 export function MainPage() {
     document.title = "Batch QR Code";
@@ -11,14 +13,21 @@ export function MainPage() {
     });
 
     return (
-        <div className="root-background">
-            <TopNav/>
-            <div className="main-page">
-                <div className="preview-left-block">
-                    <SideMenu />
-                </div>
-                <div className="preview-right-block">
-                    <ImageLayer />
+        <>
+            <div className="root-content">
+                <TopNav/>
+                <div className="main-page">
+                    <div className="preview-wrapper">
+                        <div className="preview-main">
+                            <div className="preview-left-block">
+                                <SideMenu />
+                            </div>
+                            <div className="preview-right-block">
+                                <ImageLayer />
+                            </div>
+                        </div>
+                    </div>
+                    <HowToUse />
                 </div>
             </div>
             <div>
@@ -30,6 +39,7 @@ export function MainPage() {
                     data-ad-format="auto">
                 </ins>
             </div>
-        </div>
+            <Footer/>
+        </>
     );
 }

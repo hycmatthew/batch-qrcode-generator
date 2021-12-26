@@ -1,41 +1,63 @@
 $mobile_size: 768px;
+$footer_height: 36px;
 
 body{
     margin: 0px;
 }
 
-.root-background{
-    background-color: #f4f6f9;
-    padding: 28px;
-    min-height: 100vh;
+#root{
+    background-color: #F5F7F8;
 }
 
-.top-nav{
-    max-width: 1200px;
-    margin: 0 auto;
-    padding-bottom: 2%;
+.root-content{
+    padding: 28px 0px 0px 0px;
+    min-height: calc(100% - $footer_height);
+    flex-direction: column;
+
+    .top-nav{
+        max-width: 1200px;
+        margin: 0 auto;
+        padding-bottom: 2%;
+        
+        Button{
+            font-size: 16px;
+            font-weight: 600;
+            padding: 0% 3vw;
+            color: #fff;
+        }
+        a{
+            color: #2b3252;
+            text-decoration: none !important;
+        }
+        img{
+            width: 6%;
+            min-width: 64px;
+        }
+    }
+
+    .preview-wrapper{
+        padding: 30px;
+
+        .preview-main{
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 12px;
+        }
+    }
     
-    Button{
-        font-size: 16px;
-        font-weight: 600;
-        padding: 0% 3vw;
-        color: #fff;
-    }
-    a{
-        color: #2b3252;
-        text-decoration: none !important;
-    }
-    img{
-        width: 6%;
-        min-width: 64px;
-    }
 }
 
-.main-page{
+.footer-block{
+    height: $footer_height;
     max-width: 1200px;
     margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 12px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #999;
+
+    @media (max-width: $mobile_size) {
+        padding: 0px 16px;
+    }
 }
 
 .preview-left-block, .preview-right-block{
@@ -48,7 +70,7 @@ body{
     vertical-align: top;
     width: 56%;
     padding: 2%;
-    @media (max-width: 768px) {
+    @media (max-width: $mobile_size) {
         width: 92%;
         padding: 4%;
     }
@@ -60,7 +82,7 @@ body{
     padding: 5% 2%;
     text-align: center;
 
-    @media (max-width: 768px) {
+    @media (max-width: $mobile_size) {
         width: 92%;
         padding: 4% 4% 18% 4%;
     }
@@ -101,6 +123,78 @@ body{
 .background-color-text{
     color: #000;
 }
+
+.get-started-block{
+    background-color: #2B5F75;
+    margin: 8vh 0%;
+    padding: 68px;
+    text-align: center;
+
+    @media (max-width: $mobile_size) {
+        padding: 68px 44px;
+    }
+
+    h2{
+        font-family: Helvetica, sans-serif;
+        font-size: 48px;
+        color: #fff;
+        margin: 10px;
+        padding-bottom: 26px;
+
+        @media (max-width: $mobile_size) {
+            margin: 30px 10px;
+            font-size: 40px;
+            padding-bottom: 10px;
+        }
+
+    }
+    .get-started-desc{
+        text-align: left;
+        max-width: 1100px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+
+        .desc-block-1{
+            flex: 0 0 60%;
+
+            @media (max-width: $mobile_size) {
+                flex: 0 0 100%;
+            }
+
+            .get-started-text-block{
+                padding: 15px 0px;
+
+                h3{
+                    font-family: Helvetica, sans-serif;
+                    color: #fff;
+                    font-size: 24px;
+                    margin: 16px 0px;
+                }
+                p{
+                    font-family: Helvetica, sans-serif;
+                    color: #fff;
+                    font-size: 20px;
+                    margin: 8px 0px;
+                }
+            }
+        }
+        .desc-block-2{
+            flex: 0 0 40%;
+            
+            @media (max-width: $mobile_size) {
+                flex: 0 0 100%;
+                padding-top: 36px;
+            }
+
+            img{
+                border-radius: 3%;
+                width: 100%;
+            }
+        }
+    }
+}
+
 
 .download-page{
     max-width: 1000px;
