@@ -4,6 +4,7 @@ import { TopNav } from './TopNav.js';
 import { ImageLayer } from "./ImageLayer.js";
 import { HowToUse } from "./HowToUse.js";
 import { Footer } from "./Footer.js";
+import { AppDisplay } from "./AppDisplay.js";
 
 export function MainPage() {
     document.title = "Batch QR Code";
@@ -28,6 +29,7 @@ export function MainPage() {
                         </div>
                     </div>
                     <HowToUse />
+                    <AppDisplay />
                 </div>
             </div>
             <Footer/>

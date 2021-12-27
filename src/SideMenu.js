@@ -162,7 +162,6 @@ export function SideMenu() {
         if(str === ""){
             setErrorType(0);
         }
-        console.log(tempCodeList);
         return tempCodeList
     }
 
@@ -218,7 +217,6 @@ export function SideMenu() {
         
         clearTimeout(colorTimer);
         colorTimer = setTimeout(() => {
-            console.log(new Date());
             dispatch({ type: 'updateCodeColor', codeColor: color});
             setCodeSetting(prevState => ({...prevState, codeColor: color}));
         }, 50);
@@ -229,7 +227,6 @@ export function SideMenu() {
 
         clearTimeout(colorTimer);
         colorTimer = setTimeout(() => {
-            console.log(new Date());
             setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
             dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
         }, 50);

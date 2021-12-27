@@ -197,6 +197,46 @@ body{
     }
 }
 
+.device-display-block{
+    background-color: #fff;
+    
+    .device-display-content{
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items:center;
+
+        .screenshot-block{
+            flex: 0 0 40%;
+
+            .screenshot-img-block{
+                padding: 20% 20% 0% 20%;
+                
+            }
+            
+            img{
+                width: 100%;
+                vertical-align: bottom;
+            }
+        }
+
+        .device-content-block{
+            flex: 0 0 60%;
+            .device-content-desc{
+                h3{
+                    font-family: Helvetica, sans-serif;
+                    font-size: 26px;
+                }
+                p{
+                    font-family: Helvetica, sans-serif;
+                    font-size: 18px;
+                }
+            }
+        }
+    }
+}
+
 
 .download-page{
     max-width: 1000px;

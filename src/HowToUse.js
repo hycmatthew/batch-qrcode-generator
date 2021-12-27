@@ -24,7 +24,7 @@ export function HowToUse() {
             </div>
             <div className="desc-block-2">
                 <div className="desc-image-block">
-                    <img src={DescImage} />
+                    <img alt="Get Started" src={DescImage} />
                 </div>
             </div>
         </div>
