@@ -30,15 +30,6 @@ export function MainPage() {
                     <HowToUse />
                 </div>
             </div>
-            <div>
-                <ins className="adsbygoogle"
-                    style={{display:'block'}}
-                    data-ad-client="ca-pub-1234567890123456"
-                    data-ad-slot="1234567890"
-                    data-adtest="on"
-                    data-ad-format="auto">
-                </ins>
-            </div>
             <Footer/>
         </>
     );

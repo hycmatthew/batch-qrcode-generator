@@ -156,7 +156,7 @@ body{
         flex-wrap: wrap;
 
         .desc-block-1{
-            flex: 0 0 60%;
+            flex: 0 0 56%;
 
             @media (max-width: $mobile_size) {
                 flex: 0 0 100%;
@@ -175,16 +175,18 @@ body{
                     font-family: Helvetica, sans-serif;
                     color: #fff;
                     font-size: 20px;
+                    line-height: 1.3em;
                     margin: 8px 0px;
                 }
             }
         }
         .desc-block-2{
+            padding: 0px 0px 0px 4%;
             flex: 0 0 40%;
             
             @media (max-width: $mobile_size) {
                 flex: 0 0 100%;
-                padding-top: 36px;
+                padding: 36px 0px 0px 0px;
             }
 
             img{

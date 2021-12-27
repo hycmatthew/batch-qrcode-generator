@@ -15,7 +15,7 @@ export function HowToUse() {
                 <div className="get-started-text-block">
                     <h3>2. Configure the QR Code </h3>
                     <p>Single Mode - Input single links</p>
-                    <p>Batch Mode - Input the links and filenames</p>
+                    <p>Batch Mode - Input the links and filenames, seperate links and filenames by comma</p>
                 </div>
                 <div className="get-started-text-block">
                     <h3>3. Download the QR Code</h3>

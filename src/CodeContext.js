@@ -10,7 +10,7 @@ const initialState = {
     codeSize: 1000,
     imageSize: 100,
     codeColor: '#000000',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#FFFFFF',
     codeData: {}
 };
 
