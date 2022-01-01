@@ -12,6 +12,7 @@ import { useLocation } from "react-router";
 import QRCode from "qrcode.react";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
+import { Footer } from "./Footer.js";
 
 export function DownloadPage() {
     document.title = "Batch QR Code";
@@ -69,30 +70,35 @@ export function DownloadPage() {
     }
 
     return (
-    <div className="root-background">
-        <TopNav/>
-        <div className="download-page">
-            <div className="download-block">
-                <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
-            </div>
-            <div className="code-preview-list">
-                <div className="code-preview-desc">
-                    <p>Total {codeState.codeData.length} QR Codes.</p>
+        <>
+            <div className="root-content">
+                <TopNav/>
+                <div className="download-main">
+                    <div className="download-page">
+                        <div className="download-block">
+                            <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
+                        </div>
+                        <div className="code-preview-list">
+                            <div className="code-preview-desc">
+                                <p>Total {codeState.codeData.length} QR Codes.</p>
+                            </div>
+                            <TableContainer>
+                                <Table aria-label="simple table">
+                                    <TableBody>
+                                        {codeState.codeData.map((item) => (
+                                            <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                                                <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
+                                                <TableCell align="right">{item.link}</TableCell>
+                                                <TableCell align="right">{item.filename+".png"}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </div>
+                    </div>
                 </div>
-                <TableContainer>
-                    <Table aria-label="simple table">
-                        <TableBody>
-                            {codeState.codeData.map((item) => (
-                                <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                    <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
-                                    <TableCell align="right">{item.link}</TableCell>
-                                    <TableCell align="right">{item.filename+".png"}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
             </div>
-        </div>
-    </div>);
+            <Footer/>
+        </>);
 }

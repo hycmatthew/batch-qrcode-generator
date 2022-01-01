@@ -17,7 +17,7 @@ export function AppDisplay() {
                         <h3>Batch QR Code iOS App</h3>
                         <p>Create Multiple QR Codes once</p>
                         <p>Available on the Apple App Store</p>
-                        <img alt="Download on the Apple App Store" src={AppStoreIcon} />
+                        <a href="https://apps.apple.com/bw/app/batch-qr-code/id1586801816" target="_blank"><img alt="Download on the Apple App Store" src={AppStoreIcon} /></a>
                     </div>
                 </div>
             </div>
