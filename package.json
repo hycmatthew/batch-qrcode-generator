@@ -1,6 +1,8 @@
 {
   "name": "batch-qrcode-generator",
   "version": "1.0.0",
+  "private": true,
+  "homepage": "https://hycmatthew.github.io/batch-qrcode-generator/",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +10,7 @@
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
     "predeploy": "npm run build" ,   
-    "deploy": "gh-pages -d build"  
+    "deploy": "gh-pages -d dist"
   },
   "keywords": [],
   "author": "Chan Ho Yuen",
