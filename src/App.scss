@@ -14,6 +14,10 @@ body{
     .preview-wrapper{
         padding: 40px;
 
+        @media (max-width: $mobile_size) {
+            padding: 25px;
+        }
+
         .preview-main{
             max-width: 1200px;
             margin: 0 auto;
@@ -36,14 +40,16 @@ body{
         margin: 0 auto;
         
         Button{
-            font-family: $lato_font;
-            font-size: 16px;
             padding: 0% 3%;
             text-transform: none;
         }
         a{
+            font-family: $lato_font;
+            font-size: 16px;
             color: #293745;
-            text-decoration: none !important;
+            text-transform: none;
+            text-decoration: none;
+            padding: 0% 3%;
         }
         img{
             width: 5.5%;
@@ -328,6 +334,10 @@ body{
                 font-size: 18px;
             }
             a{
+                color: #fff;
+                margin: 0 12px;
+            }
+            button{
                 color: #fff;
             }
         }

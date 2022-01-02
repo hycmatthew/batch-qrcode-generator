@@ -2,6 +2,10 @@ import React from "react";
 import { TopNav } from './TopNav.js';
 import { Footer } from "./Footer.js";
 
+import IconButton from '@mui/material/IconButton';
+import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
+import FacebookIcon from '@mui/icons-material/Facebook';
+
 export function Contact() {
 
     return (
@@ -12,13 +16,18 @@ export function Contact() {
                     <div className="contact-top-wrapper">
                         <div className="contact-top-block">
                             <h3>Feel free to contact us if you have any questions</h3>
-                            <p>email: <a href="mailto:smallflamestudio@gmail.com">smallflamestudio@gmail.com</a></p>
+                            <a href="mailto:smallflamestudio@gmail.com"><IconButton variant="outlined" aria-label="add to shopping cart">
+                                <EmailRoundedIcon fontSize="large" />
+                            </IconButton></a>
+                            <a href="https://www.facebook.com/Small-Flame-Studio-266778240706507/?ref=pages_you_manage" target="_blank"><IconButton variant="outlined" aria-label="add to shopping cart">
+                                <FacebookIcon fontSize="large" />
+                            </IconButton></a>
                         </div>
                     </div>
                     <div className="contact-bottom-wrapper">
                         <div className="question-block">
                             <h3>Reporting a bug or technical issue</h3>
-                            <p>If you notice an issue on this Website, please contact <a href="mailto:smallflamestudio@gmail.com">smallflamestudio@gmail.com</a></p>
+                            <p>If you notice an issue on this Website, please contact <a href="mailto:smallflamestudio@gmail.com">us</a>.</p>
                         </div>
                     </div>
                 </div>
