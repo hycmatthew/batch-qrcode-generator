@@ -283,7 +283,7 @@ Support up to 200 links" focused />);
 
     return (
         <ThemeProvider theme={theme}>
-            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader">QR Code Setting</ListSubheader>}>
+            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader" disableSticky="false">QR Code Setting</ListSubheader>}>
                 <ListItem>
                     <ToggleButtonGroup color="primary" value={codeSetting.isBatch} onChange={updateQRCodeType}  exclusive>
                         <ToggleButton value={false}>Single</ToggleButton>
@@ -349,7 +349,7 @@ Support up to 200 links" focused />);
                         </ListItem>
                         <ListItem>
                             <Box sx={{ width: 250 }}>
-                                <Typography id="image-size-slider" gutterBottom>Logo Size (In Pixel)</Typography>
+                                <Typography id="image-size-slider" gutterBottom>Logo Size</Typography>
                                 <Grid container spacing={2} alignItems="center">
                                     <Grid item xs>
                                         <Slider min={20} step={1} max={100} value={typeof codeSetting.imageSize === 'number' ? codeSetting.imageSize : 0}  aria-labelledby="image-size-slider" onChange={ updateImageSize } />
