@@ -283,7 +283,7 @@ Support up to 200 links" focused />);
 
     return (
         <ThemeProvider theme={theme}>
-            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader" disableSticky="false">QR Code Setting</ListSubheader>}>
+            <List className="side-main-list" subheader={<ListSubheader component="div" id="nested-list-subheader" disableSticky={true}>QR Code Setting</ListSubheader>}>
                 <ListItem>
                     <ToggleButtonGroup color="primary" value={codeSetting.isBatch} onChange={updateQRCodeType}  exclusive>
                         <ToggleButton value={false}>Single</ToggleButton>

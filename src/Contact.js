@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TopNav } from './TopNav.js';
 import { Footer } from "./Footer.js";
 
@@ -7,6 +7,10 @@ import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import FacebookIcon from '@mui/icons-material/Facebook';
 
 export function Contact() {
+    /*
+    useEffect(() => {
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+    });*/
 
     return (
         <>
@@ -30,6 +34,12 @@ export function Contact() {
                             <p>If you notice an issue on this Website, please contact <a href="mailto:smallflamestudio@gmail.com">us</a>.</p>
                         </div>
                     </div>
+                    {/*
+                    <ins className='adsbygoogle'
+                        style={{ display: 'block' }}
+                        data-ad-client='ca-pub-4050046188209105'
+                        data-ad-slot='4050046188209105'
+                        data-ad-format='auto' />*/}
                 </div>
             </div>
             <Footer/>

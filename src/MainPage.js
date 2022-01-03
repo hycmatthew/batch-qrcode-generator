@@ -8,11 +8,7 @@ import { AppDisplay } from "./AppDisplay.js";
 
 export function MainPage() {
     document.title = "Batch QR Code";
-
-    useEffect(() => {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-    });
-
+    
     return (
         <>
             <div className="root-content">
