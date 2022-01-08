@@ -1,4 +1,4 @@
-import React, { useContext, useEffect }  from "react";
+import React, { useContext, useRef }  from "react";
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -43,14 +43,13 @@ export function SideMenu() {
     const [typingTimer, setTypingTimer] = React.useState(null);
     const [showCodeSetting, setShowCodeSetting] = React.useState(true);
     const [showImageSetting, setShowImageSetting] = React.useState(true);
-    const [testColor, setTestColor] = React.useState("#000000");
 
     const {state, dispatch} = useContext(CodeContext);
 
     const [codeSetting, setCodeSetting] = React.useState(initCodeSetting);
     const [errorType, setErrorType] = React.useState(0);
 
-    let colorTimer = null;
+    const colorTimer = useRef();
 
     const theme = createTheme({
         typography: {
@@ -215,8 +214,8 @@ export function SideMenu() {
     const updateCodeColor = (e) => {
         const color = e.target.value.toUpperCase();
         
-        clearTimeout(colorTimer);
-        colorTimer = setTimeout(() => {
+        clearTimeout(colorTimer.current);
+        colorTimer.current = setTimeout(() => {
             dispatch({ type: 'updateCodeColor', codeColor: color});
             setCodeSetting(prevState => ({...prevState, codeColor: color}));
         }, 50);
@@ -225,8 +224,8 @@ export function SideMenu() {
     const updateBackgroundColor = (e) => {
         const color = e.target.value.toUpperCase();
 
-        clearTimeout(colorTimer);
-        colorTimer = setTimeout(() => {
+        clearTimeout(colorTimer.current);
+        colorTimer.current = setTimeout(() => {
             setCodeSetting(prevState => ({...prevState, backgroundColor: color}));
             dispatch({ type: 'updateBackgroundColor', backgroundColor: color});
         }, 50);
