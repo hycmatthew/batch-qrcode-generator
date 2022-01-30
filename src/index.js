@@ -6,6 +6,8 @@ import {HashRouter , Routes, Route} from "react-router-dom";
 import { DownloadPage } from "./DownloadPage.js";
 import { Contact } from "./Contact.js";
 
+import ReactGA from 'react-ga';
+
 const appElement = document.getElementById("root");
 
 ReactDOM.render(
