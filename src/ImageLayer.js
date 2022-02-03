@@ -1,7 +1,8 @@
-import React, { useEffect, useContext, useRef }  from "react";
+import React, { useEffect, useContext, useRef } from "react";
+import Compressor from 'compressorjs';
 import { CodeContext } from "./CodeContext.js";
 import { Link } from "react-router-dom";
-import Button from '@mui/material/Button';
+import Button from "@mui/material/Button";
 import QRCodeStyling from "qr-code-styling";
 
 /**
@@ -81,135 +82,153 @@ import QRCodeStyling from "qr-code-styling";
  */
 
 const qrCode = new QRCodeStyling({
-    data: "https://batchqrcode.com/",
-    width: 1000,
-    height: 1000,
-    type: "canvas",
-    image: "",
-    dotsOptions: {
-        color: "#4267b2",
-        type: "rounded"
+	data: "https://batchqrcode.com/",
+	width: 1000,
+	height: 1000,
+    margin: 20,
+	type: "canvas",
+	image: "",
+	dotsOptions: {
+        type: "square",
+		color: "#4267b2",
+	},
+	backgroundOptions: {
+		color: "#e9ebee",
+	},
+	imageOptions: {
+        hideBackgroundDots: false,
+		crossOrigin: "anonymous",
+		margin: 0,
+	},
+	cornersSquareOptions: { 
+        type: "square", 
+        color: "#000000",
     },
-    backgroundOptions: {
-        color: "#e9ebee",
+	cornersDotOptions: { 
+        type: "square", 
+        color: "#000000",
     },
-    imageOptions: {
-        crossOrigin: "anonymous",
-        margin: 20
-    },
-    qrOptions: {
-        errorCorrectionLevel: 'Q'
-    }
+	qrOptions: {
+		errorCorrectionLevel: "H",
+	},
 });
 
-
 export function ImageLayer() {
-    const { state, dispatch } = useContext(CodeContext);
+	const { state, dispatch } = useContext(CodeContext);
 
-    const [imageSrc, setImageSrc] = React.useState('');
-    const [inputImageSize, setInputImageSize] = React.useState({width: 100, height: 100});
+	const [imageSrc, setImageSrc] = React.useState("");
+	const [inputImageSize, setInputImageSize] = React.useState({
+		width: 100,
+		height: 100,
+	});
 
-    const ref = useRef(null);
+	const ref = useRef(null);
 
-    const codeStaticSize = 1000;
+	useEffect(() => {
+		qrCode.append(ref.current);
+	}, []);
 
-    useEffect(() => {
-        qrCode.append(ref.current);
-    }, []);
-    
-    useEffect(() => {
-        let tempLink = state.codeData.length > 0?state.codeData[0].link:"https://batchqrcode.com/";
-        qrCode.update({
-            data: tempLink,
-            margin: 20,
-            dotsOptions: {
-                color: state.codeColor,
-                type: "rounded"
+	useEffect(() => {
+		let tempLink =
+			state.codeData.length > 0
+				? state.codeData[0].link
+				: "https://batchqrcode.com/";
+		qrCode.update({
+			data: tempLink,
+			margin: 20,
+			dotsOptions: {
+                type: state.dotType,
+				color: state.codeColor,
+			},
+            cornersSquareOptions: { 
+                type: state.cornerType, 
+                color: state.cornerColor,
             },
-            backgroundOptions: {
-                color: state.backgroundColor,
+            cornersDotOptions: { 
+                type: state.cornerDotType, 
+                color: state.cornerDotColor,
             },
-            imageOptions: {
-                crossOrigin: "anonymous",
-                margin: 20
-            }
-        });
-    }, [state.codeColor, state.backgroundColor, state.codeData]);
+			backgroundOptions: {
+				color: state.backgroundColor,
+			},
+		});
+	}, [state.codeColor, state.backgroundColor, state.cornerColor, state.cornerDotColor, state.codeData, state.dotType, state.cornerType, state.cornerDotType, ]);
 
-    useEffect(() => {
-        if(state.containImage && state.imageFile !== ''){
-            let imgSize = state.imageSize/200;
+	useEffect(() => {
+		if (state.containImage && state.imageFile !== "") {
+			let compressedImage = compressImageFunction(state.imageFile);
+		} else {
+			qrCode.update({
+				image: "",
+			});
+		}
+	}, [state.containImage, state.imageFile, state.imageSize]);
+ 
 
-            let screenImage = new Image();
-            const reader = new FileReader();
-            reader.onload=()=>{
-                screenImage.src = reader.result;
-            }
-            reader.readAsDataURL(state.imageFile);
-            screenImage.onload = function() {
-                let setSize = {width: screenImage.naturalWidth, height: screenImage.height};
-                setInputImageSize(setSize)
-                setImageSrc(screenImage.src);
-                qrCode.update({
-                    image: screenImage.src,
-                    imageOptions: {
-                        imageSize: imgSize
-                    }
-                });
-            }
-        }else{
-            qrCode.update({
-                image: "",
-            });
-        }
-        
-    }, [state.containImage, state.imageFile, state.imageSize]);
+	const compressImageFunction = (tempImage) => {
+		let imgSize = state.imageSize / 200;
 
-    /*
-    useEffect(() => {
-        if(state.containImage && state.imageFile !== ''){
-            let screenImage = new Image();
-            const reader = new FileReader();
-            reader.onload=()=>{
-                screenImage.src = reader.result;
-            }
-            reader.readAsDataURL(state.imageFile);
-            screenImage.onload = function() {
-                let setSize = {width: screenImage.naturalWidth, height: screenImage.height};
-                setInputImageSize(setSize)
-                setImageSrc(screenImage.src);
-            }
-        }
-        
-    }, [state.containImage, state.imageFile]);
+		new Compressor(tempImage, {
+			quality: 0.7,
+			
+			success(result) {
+				let screenImage = new Image();
+				const reader = new FileReader();
+				reader.onload = () => {
+					screenImage.src = reader.result;
+					setImageSrc(reader.result);
+				};
+				reader.readAsDataURL(result);
+				screenImage.onload = function () {
+					console.log(screenImage.src);
+					let setSize = {
+						width: screenImage.naturalWidth,
+						height: screenImage.height,
+					};
+					setInputImageSize(setSize);
+					qrCode.update({
+						image: screenImage.src,
+						imageOptions: {
+							imageSize: imgSize,
+						},
+					});
+				};
+			},
+			error(err) {
+				console.log(err.message);
+			},
+		});
+	}
 
-    useEffect(() => {
-        if(state.codeData.length > 0){
-            setCodeLink(state.codeData[0].link);
-        }
-    }, [state.isBatch, state.codeData]);
-    */
-   
-    const dlButtonLogic = () =>{
-        if(state.codeData.length > 0){
-            return(
-                <Link to="/download" state={{ codeState: state, imageSrc: imageSrc, inputImageSize: inputImageSize}}>
-                    <Button variant="contained" disableElevation>Download</Button>
-                </Link>
-            )
-        }else{
-            return(
-                <Button variant="contained" disableElevation disabled>Download</Button>
-            )
-        }
-    }
+	const dlButtonLogic = () => {
+		if (state.codeData.length > 0) {
+			return (
+				<Link
+					to="/download"
+					state={{
+						codeState: state
+					}}
+				>
+					<Button variant="contained" disableElevation>
+						Download
+					</Button>
+				</Link>
+			);
+		} else {
+			return (
+				<Button variant="contained" disableElevation disabled>
+					Download
+				</Button>
+			);
+		}
+	};
 
-    return (
-        <div className="image-layer">
-            <div className="preview-block">
-                <div ref={ref} />
-            </div>
-            { dlButtonLogic() }
-        </div>
-    );
+	return (
+		<div className="image-layer">
+			<div className="preview-block">
+				<div ref={ref} />
+			</div>
+			{dlButtonLogic()}
+		</div>
+	);
 }

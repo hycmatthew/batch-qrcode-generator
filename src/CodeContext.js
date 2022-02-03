@@ -3,30 +3,6 @@ import { MainPage } from "./MainPage";
 
 export const CodeContext = React.createContext();
 
-/**
- * const qrCode = new QRCodeStyling({
-    data: "https://batchqrcode.com/",
-    width: 1000,
-    height: 1000,
-    type: "canvas",
-    image: "",
-    dotsOptions: {
-        color: "#4267b2",
-        type: "rounded"
-    },
-    backgroundOptions: {
-        color: "#e9ebee",
-    },
-    imageOptions: {
-        crossOrigin: "anonymous",
-        margin: 20
-    },
-    qrOptions: {
-        errorCorrectionLevel: 'Q'
-    }
-});
- */
-
 const initialState = {
     isBatch: false,
     imageFile: '',

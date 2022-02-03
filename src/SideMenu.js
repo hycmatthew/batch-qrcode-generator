@@ -26,6 +26,8 @@ import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
@@ -57,6 +59,9 @@ export function SideMenu() {
   const [showCodeSetting, setShowCodeSetting] = React.useState(true);
   const [showImageSetting, setShowImageSetting] = React.useState(true);
   const [showStyleSetting, setShowStyleSetting] = React.useState(false);
+
+  const [syncCornerColor, setSyncCornerColor] = React.useState(true);
+  const [syncCornerDotColor, setSyncCornerDotColor] = React.useState(true);
 
   const { state, dispatch } = useContext(CodeContext);
 
@@ -243,8 +248,7 @@ export function SideMenu() {
 
     clearTimeout(colorTimer.current);
     colorTimer.current = setTimeout(() => {
-      dispatch({ type: "updateCodeColor", codeColor: color });
-      setCodeSetting((prevState) => ({ ...prevState, codeColor: color }));
+      setCodeColorLogic(color, 1);
     }, 50);
   };
 
@@ -253,8 +257,7 @@ export function SideMenu() {
 
     clearTimeout(colorTimer.current);
     colorTimer.current = setTimeout(() => {
-      setCodeSetting((prevState) => ({ ...prevState, backgroundColor: color }));
-      dispatch({ type: "updateBackgroundColor", backgroundColor: color });
+      setCodeColorLogic(color, 2);
     }, 50);
   };
 
@@ -263,8 +266,7 @@ export function SideMenu() {
 
     clearTimeout(colorTimer.current);
     colorTimer.current = setTimeout(() => {
-      dispatch({ type: "updateCornerColor", cornerColor: color });
-      setCodeSetting((prevState) => ({ ...prevState, cornerColor: color }));
+      setCodeColorLogic(color, 3);
     }, 50);
   };
 
@@ -273,10 +275,59 @@ export function SideMenu() {
 
     clearTimeout(colorTimer.current);
     colorTimer.current = setTimeout(() => {
-      dispatch({ type: "updateCornerDotColor", cornerDotColor: color });
-      setCodeSetting((prevState) => ({ ...prevState, cornerDotColor: color }));
+      setCodeColorLogic(color, 4);
     }, 50);
   };
+
+  const udpateSyncCornerColor = (e) => {
+    setSyncCornerColor(e.target.checked);
+    let setColor = codeSetting.codeColor;
+    if(!e.target.checked){
+      setColor = codeSetting.cornerColor;
+    }
+    setCodeColorLogic(setColor, 3);
+  }
+
+  const udpateSyncCornerDotColor = (e) => {
+    setSyncCornerDotColor(e.target.checked);
+    let setColor = codeSetting.codeColor;
+    if(!e.target.checked){
+      setColor = codeSetting.cornerDotColor;
+    }
+    setCodeColorLogic(setColor, 4);
+  }
+
+  const setCodeColorLogic = (color, typeNum) => {
+    //typeNum 1=code 2=bg 3=corner 4=cornerDot
+    switch(typeNum){
+      case 1:
+        dispatch({ type: "updateCodeColor", codeColor: color });
+        setCodeSetting((prevState) => ({ ...prevState, codeColor: color }));
+        if(syncCornerColor){
+          dispatch({ type: "updateCornerColor", cornerColor: color });
+          setCodeSetting((prevState) => ({ ...prevState, cornerColor: color }));
+        }
+        if(syncCornerDotColor){
+          setCodeSetting((prevState) => ({ ...prevState, cornerDotColor: color }));
+          dispatch({ type: "updateCornerDotColor", cornerDotColor: color });
+        }
+        break;
+      case 2:
+        setCodeSetting((prevState) => ({ ...prevState, backgroundColor: color }));
+        dispatch({ type: "updateBackgroundColor", backgroundColor: color });
+        break;
+      case 3:
+        dispatch({ type: "updateCornerColor", cornerColor: color });
+        setCodeSetting((prevState) => ({ ...prevState, cornerColor: color }));
+        break;
+      case 4:
+        setCodeSetting((prevState) => ({ ...prevState, cornerDotColor: color }));
+        dispatch({ type: "updateCornerDotColor", cornerDotColor: color });
+        break;
+      default:
+        break;
+    }
+  }
 
   const updateCodeSize = (e) => {
     let sizeNum = parseInt(e.target.value);
@@ -313,27 +364,30 @@ export function SideMenu() {
 
   // QR Code Style
   const updateCodeDotType = (e) => {
+    let styleType = e.target.value;
     setCodeSetting((prevState) => ({
       ...prevState,
-      dotType: e.target.value,
+      dotType: styleType,
     }));
-    dispatch({ type: "updateCodeDotType", dotType: type });
+    dispatch({ type: "updateCodeDotType", dotType: styleType });
   };
 
   const updateCornerType = (e) => {
+    let styleType = e.target.value;
     setCodeSetting((prevState) => ({
       ...prevState,
-      cornerType: e.target.value,
+      cornerType: styleType,
     }));
-    dispatch({ type: "updateCornerType", cornerType: type });
+    dispatch({ type: "updateCornerType", cornerType: styleType });
   };
 
   const updateCornerDotType = (e) => {
+    let styleType = e.target.value;
     setCodeSetting((prevState) => ({
       ...prevState,
-      cornerDotType: e.target.value,
+      cornerDotType: styleType,
     }));
-    dispatch({ type: "updateCornerDotType", cornerDotType: type });
+    dispatch({ type: "updateCornerDotType", cornerDotType: styleType });
   };
 
   const setInputTextField = () => {
@@ -618,7 +672,7 @@ Support up to 200 links"
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={showCodeSetting.dotType}
+                    value={codeSetting.dotType}
                     label="Dot Type"
                     onChange={updateCodeDotType}
                   >
@@ -640,7 +694,7 @@ Support up to 200 links"
                     displayEmpty={true}
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={showCodeSetting.dotType}
+                    value={codeSetting.cornerType}
                     label="Corner Type"
                     onChange={updateCornerType}
                   >
@@ -658,6 +712,7 @@ Support up to 200 links"
                     onChange={updateCornerColor}
                   />
                 </div>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={udpateSyncCornerColor}/>} label="Sync with code color" />
               </Stack>
             </ListItem>
             <ListItem>
@@ -669,7 +724,7 @@ Support up to 200 links"
                   <Select
                     labelId="demo-simple-select-label"
                     id="demo-simple-select"
-                    value={showCodeSetting.dotType}
+                    value={codeSetting.cornerDotType}
                     label="Corner Dot Type"
                     onChange={updateCornerDotType}
                   >
@@ -686,6 +741,7 @@ Support up to 200 links"
                     onChange={updateCornerDotColor}
                   />
                 </div>
+                <FormControlLabel control={<Checkbox defaultChecked onChange={udpateSyncCornerDotColor}/>} label="Sync with code color" />
               </Stack>
             </ListItem>
           </List>
