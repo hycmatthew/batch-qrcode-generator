@@ -4,6 +4,7 @@ import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import ListItemText from "@mui/material/ListItemText";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -34,7 +35,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CodeContext } from "./CodeContext.js";
-import Compressor from 'compressorjs';
 
 export function SideMenu() {
   const Input = styled(MuiInput)`
@@ -493,7 +493,7 @@ Support up to 200 links"
         </List>
         <ListItemButton onClick={updateShowCodeSetting}>
           <ListItemIcon>
-            <QrCodeScannerIcon />{" "}
+            <ColorLensIcon />
           </ListItemIcon>
           <ListItemText primary="QR Code Color" />
           {showCodeSetting ? <ExpandLess /> : <ExpandMore />}
@@ -652,7 +652,7 @@ Support up to 200 links"
           onClick={updateShowStyleSetting}
         >
           <ListItemIcon>
-            <InsertPhotoIcon />{" "}
+            <QrCodeScannerIcon />
           </ListItemIcon>
           <ListItemText primary="Custom Style" />
           <Switch
@@ -681,6 +681,8 @@ Support up to 200 links"
                     <MenuItem value={"rounded"}>rounded</MenuItem>
                     <MenuItem value={"dots"}>dots</MenuItem>
                     <MenuItem value={"classy"}>classy</MenuItem>
+                    <MenuItem value={"classy-rounded"}>classy-rounded</MenuItem>
+                    <MenuItem value={"extra-rounded"}>extra-rounded</MenuItem>
                   </Select>
                 </FormControl>
               </Stack>
@@ -704,7 +706,7 @@ Support up to 200 links"
                     <MenuItem value={"extra-rounded"}>extra-rounded</MenuItem>
                   </Select>
                 </FormControl>
-                <p className="style-color-text">Corner Dot Type</p>
+                <p className="style-color-text">Corner Color</p>
                 <div className="background-color-block">
                   <input
                     id="color"
@@ -733,7 +735,7 @@ Support up to 200 links"
                     <MenuItem value={"dot"}>dot</MenuItem>
                   </Select>
                 </FormControl>
-                <p className="style-color-text">Corner Dot Type</p>
+                <p className="style-color-text">Corner Dot Color</p>
                 <div className="background-color-block">
                   <input
                     id="color"
