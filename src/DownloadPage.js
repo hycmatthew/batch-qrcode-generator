@@ -20,8 +20,9 @@ export function DownloadPage() {
     const location = useLocation();
     const {codeState, imageFile} = location.state;
 
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
     const codeRef = useRef([]);
+    let setIntervalId = null;
 
     const downloadLogic = () => {
         setLoading(true);
@@ -42,53 +43,55 @@ export function DownloadPage() {
         }, 300);
     }
 
-    useEffect(() => {    
+    const checkImageReadyFunction = () => {
+        let canvasList = document.getElementsByTagName("canvas");
+        if(canvasList.length === codeState.codeData.length){
+            setLoading(false);
+            clearInterval(setIntervalId);
+        }
+    }
+
+    useEffect(() => {
+        setIntervalId = setInterval(checkImageReadyFunction, 500);
+
         if (codeState.containImage && codeState.imageFile !== "") {
 			let imgSize = codeState.imageSize/200;
-            let logoImage = "";
 
-            const reader = new FileReader();
-            reader.onload = () => {
-                logoImage = reader.result;
-
-                for(const item in codeRef.current){
-                    const qrCode = new QRCodeStyling({
-                        data: codeState.codeData[item].link,
-                        width: codeState.codeSize,
-                        height: codeState.codeSize,
-                        margin: 20,
-                        type: "canvas",
-                        image: logoImage,
-                        dotsOptions: {
-                            type: codeState.dotType,
-                            color: codeState.codeColor,
-                        },
-                        backgroundOptions: {
-                            color: codeState.backgroundColor,
-                        },
-                        imageOptions: {
-                            imageSize: imgSize,
-                            hideBackgroundDots: false,
-                            crossOrigin: "anonymous",
-                            margin: 0,
-                        },
-                        cornersSquareOptions: { 
-                            type: codeState.cornerType, 
-                            color: codeState.cornerColor,
-                        },
-                        cornersDotOptions: { 
-                            type: codeState.cornerDotType, 
-                            color: codeState.cornerDotColor,
-                        },
-                        qrOptions: {
-                            errorCorrectionLevel: "H",
-                        },
-                    });
-                    qrCode.append(codeRef.current[item]);
-                }
-            };
-            reader.readAsDataURL(codeState.imageFile);
-
+            for(const item in codeRef.current){
+                const qrCode = new QRCodeStyling({
+                    data: codeState.codeData[item].link,
+                    width: codeState.codeSize,
+                    height: codeState.codeSize,
+                    margin: 20,
+                    type: "canvas",
+                    image: imageFile,
+                    dotsOptions: {
+                        type: codeState.dotType,
+                        color: codeState.codeColor,
+                    },
+                    backgroundOptions: {
+                        color: codeState.backgroundColor,
+                    },
+                    imageOptions: {
+                        imageSize: imgSize,
+                        hideBackgroundDots: false,
+                        crossOrigin: "anonymous",
+                        margin: 0,
+                    },
+                    cornersSquareOptions: { 
+                        type: codeState.cornerType, 
+                        color: codeState.cornerColor,
+                    },
+                    cornersDotOptions: { 
+                        type: codeState.cornerDotType, 
+                        color: codeState.cornerDotColor,
+                    },
+                    qrOptions: {
+                        errorCorrectionLevel: "H",
+                    },
+                });
+                qrCode.append(codeRef.current[item]);
+            }
 		} else {
             for(const item in codeRef.current){
                 const qrCode = new QRCodeStyling({
