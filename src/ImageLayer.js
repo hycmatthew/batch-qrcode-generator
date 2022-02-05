@@ -156,7 +156,7 @@ export function ImageLayer() {
 
 	useEffect(() => {
 		if (state.containImage && state.imageFile !== "") {
-			let compressedImage = compressImageFunction(state.imageFile);
+			compressImageFunction(state.imageFile);
 		} else {
 			qrCode.update({
 				image: "",
@@ -170,7 +170,9 @@ export function ImageLayer() {
 
 		new Compressor(tempImage, {
 			quality: 0.7,
-			
+			maxWidth: 700,
+			minHeight: 700,
+
 			success(result) {
 				let screenImage = new Image();
 				const reader = new FileReader();
@@ -206,7 +208,8 @@ export function ImageLayer() {
 				<Link
 					to="/download"
 					state={{
-						codeState: state
+						codeState: state,
+						imageFile: imageSrc
 					}}
 				>
 					<Button variant="contained" disableElevation>
