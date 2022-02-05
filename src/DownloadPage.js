@@ -116,7 +116,7 @@ export function DownloadPage() {
                         color: codeState.cornerDotColor,
                     },
                     qrOptions: {
-                        errorCorrectionLevel: "H",
+                        errorCorrectionLevel: "M",
                     },
                 });
                 qrCode.append(codeRef.current[item]);
