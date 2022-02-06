@@ -109,7 +109,7 @@ const qrCode = new QRCodeStyling({
         color: "#000000",
     },
 	qrOptions: {
-		errorCorrectionLevel: "H",
+		errorCorrectionLevel: "M",
 	},
 });
 
@@ -152,7 +152,7 @@ export function ImageLayer() {
 				color: state.backgroundColor,
 			},
 		});
-	}, [state.codeColor, state.backgroundColor, state.cornerColor, state.cornerDotColor, state.codeData, state.dotType, state.cornerType, state.cornerDotType, ]);
+	}, [state.codeColor, state.backgroundColor, state.cornerColor, state.cornerDotColor, state.codeData, state.dotType, state.cornerType, state.cornerDotType]);
 
 	useEffect(() => {
 		if (state.containImage && state.imageFile !== "") {
@@ -160,6 +160,9 @@ export function ImageLayer() {
 		} else {
 			qrCode.update({
 				image: "",
+				qrOptions: {
+					errorCorrectionLevel: "M",
+				},
 			});
 		}
 	}, [state.containImage, state.imageFile, state.imageSize]);
@@ -192,6 +195,9 @@ export function ImageLayer() {
 						image: screenImage.src,
 						imageOptions: {
 							imageSize: imgSize,
+						},
+						qrOptions: {
+							errorCorrectionLevel: "H",
 						},
 					});
 				};
