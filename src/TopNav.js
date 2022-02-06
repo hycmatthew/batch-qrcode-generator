@@ -11,8 +11,8 @@ export function TopNav() {
             <div className="top-nav">
                 <Stack spacing={2} direction="row">
                     <img alt="Batch QR Code Icon" src={qrCodeIcon}/>
-                        <Button variant="text"><Link to="/">Generate QR Code</Link></Button>
-                        <Button variant="text"><Link to="/contact">Contact</Link></Button>
+                        <Button variant="text" component={Link} to="/">Generate QR Code</Button>
+                        <Button variant="text" component={Link} to="/contact">Contact</Button>
                 </Stack>
             </div>
         </div>

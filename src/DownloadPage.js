@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useRef, useEffect, useState} from "react";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -9,7 +9,7 @@ import DownloadIcon from '@mui/icons-material/Download';
 
 import { TopNav } from './TopNav.js';
 import { useLocation } from "react-router";
-import QRCode from "qrcode.react";
+import QRCodeStyling from "qr-code-styling";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import { Footer } from "./Footer.js";
@@ -18,26 +18,21 @@ export function DownloadPage() {
     document.title = "Batch QR Code";
 
     const location = useLocation();
-    const {codeState, imageSrc, inputImageSize} = location.state;
+    const {codeState, imageFile} = location.state;
 
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = React.useState(true);
+    const codeRef = useRef([]);
+    let setIntervalId = null;
 
     const downloadLogic = () => {
         setLoading(true);
         let zip = new JSZip();
-        let canvasList = document.getElementsByClassName("canvas-code");
-        let setImageSize = codeState.codeSize;
+        let canvasList = document.getElementsByClassName("canvas-block");
 
         setTimeout(() => {
             for(const item of canvasList){
-                var canvas = document.createElement('canvas');
-                canvas.width = setImageSize;
-                canvas.height = setImageSize;
-
-                var context = canvas.getContext('2d');
-                context.drawImage(item, 0, 0, setImageSize, setImageSize);
-
-                let imageDL = canvas.toDataURL("image/png").split(',')[1];
+                let canvasObj = item.getElementsByTagName("canvas")[0];
+                let imageDL = canvasObj.toDataURL("image/png").split(',')[1];
                 zip.file(item.id+".png", imageDL, {base64: true});
             }
     
@@ -48,27 +43,87 @@ export function DownloadPage() {
         }, 300);
     }
 
-    const codeLogic = (link, fileName) => {
-        if(codeState.containImage && imageSrc !== ''){
-            let imageRatio = inputImageSize.width/inputImageSize.height;
-            let setImageWidth = codeState.codeSize*codeState.imageSize/250;
-            let setImageHeight = setImageWidth/imageRatio;
-
-            if(imageRatio<1){
-                setImageHeight = codeState.codeSize*codeState.imageSize/250;
-                setImageWidth = setImageHeight/imageRatio;
-            }
-            return(
-                <QRCode className="canvas-code" id={fileName} level="H" size={codeState.codeSize} value={link} bgColor={codeState.backgroundColor} fgColor={codeState.codeColor} 
-                    imageSettings={{src: imageSrc, width:setImageWidth, height:setImageHeight}}/>
-            )
-        }else{
-            return(
-                <QRCode className="canvas-code" id={fileName} level="H" size={codeState.codeSize} value={link} bgColor={codeState.backgroundColor} fgColor={codeState.codeColor} />
-            )
+    const checkImageReadyFunction = () => {
+        let canvasList = document.getElementsByTagName("canvas");
+        if(canvasList.length === codeState.codeData.length){
+            setLoading(false);
+            clearInterval(setIntervalId);
         }
     }
 
+    useEffect(() => {
+        setIntervalId = setInterval(checkImageReadyFunction, 500);
+
+        if (codeState.containImage && codeState.imageFile !== "") {
+			let imgSize = codeState.imageSize/200;
+
+            for(const item in codeRef.current){
+                const qrCode = new QRCodeStyling({
+                    data: codeState.codeData[item].link,
+                    width: codeState.codeSize,
+                    height: codeState.codeSize,
+                    margin: 20,
+                    type: "canvas",
+                    image: imageFile,
+                    dotsOptions: {
+                        type: codeState.dotType,
+                        color: codeState.codeColor,
+                    },
+                    backgroundOptions: {
+                        color: codeState.backgroundColor,
+                    },
+                    imageOptions: {
+                        imageSize: imgSize,
+                        hideBackgroundDots: false,
+                        crossOrigin: "anonymous",
+                        margin: 0,
+                    },
+                    cornersSquareOptions: { 
+                        type: codeState.cornerType, 
+                        color: codeState.cornerColor,
+                    },
+                    cornersDotOptions: { 
+                        type: codeState.cornerDotType, 
+                        color: codeState.cornerDotColor,
+                    },
+                    qrOptions: {
+                        errorCorrectionLevel: "H",
+                    },
+                });
+                qrCode.append(codeRef.current[item]);
+            }
+		} else {
+            for(const item in codeRef.current){
+                const qrCode = new QRCodeStyling({
+                    data: codeState.codeData[item].link,
+                    width: codeState.codeSize,
+                    height: codeState.codeSize,
+                    margin: 20,
+                    type: "canvas",
+                    dotsOptions: {
+                        type: codeState.dotType,
+                        color: codeState.codeColor,
+                    },
+                    backgroundOptions: {
+                        color: codeState.backgroundColor,
+                    },
+                    cornersSquareOptions: { 
+                        type: codeState.cornerType, 
+                        color: codeState.cornerColor,
+                    },
+                    cornersDotOptions: { 
+                        type: codeState.cornerDotType, 
+                        color: codeState.cornerDotColor,
+                    },
+                    qrOptions: {
+                        errorCorrectionLevel: "H",
+                    },
+                });
+                qrCode.append(codeRef.current[item]);
+            }
+		}
+    }, []);
+    
     return (
         <>
             <div className="root-content">
@@ -85,9 +140,13 @@ export function DownloadPage() {
                             <TableContainer>
                                 <Table aria-label="simple table">
                                     <TableBody>
-                                        {codeState.codeData.map((item) => (
+                                        {codeState.codeData.map((item, index) => (
                                             <TableRow key={item.filename} sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-                                                <TableCell className="code-image-cell" align="right">{codeLogic(item.link, item.filename)}</TableCell>
+                                                <TableCell className="code-image-cell" align="right">
+                                                    <div className="canvas-block" id={item.filename} ref={elem => {
+                                                        codeRef.current[index] = elem;
+                                                    }}/>
+                                                </TableCell>
                                                 <TableCell align="right">{item.link}</TableCell>
                                                 <TableCell align="right">{item.filename+".png"}</TableCell>
                                             </TableRow>
