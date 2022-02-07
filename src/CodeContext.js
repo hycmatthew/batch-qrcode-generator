@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { MainPage } from "./MainPage";
+import { MainPage } from "./pages/MainPage";
 
 export const CodeContext = React.createContext();
 

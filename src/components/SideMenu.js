@@ -34,7 +34,7 @@ import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import { styled } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { CodeContext } from "./CodeContext.js";
+import { CodeContext } from "../CodeContext.js";
 
 export function SideMenu() {
   const Input = styled(MuiInput)`

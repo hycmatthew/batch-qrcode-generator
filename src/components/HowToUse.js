@@ -1,5 +1,5 @@
 import React from "react";
-import DescImage from "../image/get-started-v2.jpg"
+import DescImage from "../../image/get-started-v2.jpg"
 
 export function HowToUse() {
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useRef } from "react";
 import Compressor from 'compressorjs';
-import { CodeContext } from "./CodeContext.js";
+import { CodeContext } from "../CodeContext.js";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import QRCodeStyling from "qr-code-styling";
