@@ -1,0 +1,60 @@
+@use '../style/commonStyle';
+
+.contact-block {
+	background-color: #fff;
+	.contact-top-wrapper {
+		background-color: #0082c8;
+		.contact-top-block {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 80px 20px;
+			text-align: center;
+			color: #fff;
+
+			h3 {
+				font-family: commonStyle.$main_font;
+				font-size: 32px;
+				font-weight: 400;
+				padding-bottom: 12px;
+			}
+			p {
+				font-family: commonStyle.$main_font;
+				font-size: 18px;
+			}
+			a {
+				color: #fff;
+				margin: 0 12px;
+			}
+			button {
+				color: #fff;
+			}
+		}
+	}
+
+	.contact-bottom-wrapper {
+		max-width: 1000px;
+		margin: 0 auto;
+		padding: 50px 20px;
+		font-family: commonStyle.$main_font;
+
+		.question-block {
+			padding: 20px 0px;
+			h3 {
+				color: #293042;
+				font-size: 26px;
+				font-weight: 400;
+			}
+			p {
+				color: #555;
+				font-size: 18px;
+			}
+		}
+		h3:after {
+			height: 12px;
+			display: block;
+			width: 25%;
+			border-bottom: #fdc830 solid 2px;
+			content: "";
+		}
+	}
+}

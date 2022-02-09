@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
-import { TopNav } from '../TopNav.js';
-import { Footer } from "../Footer.js";
+import { TopNav } from '../common/TopNav.js';
+import { Footer } from "../common/Footer.js";
 
 import IconButton from '@mui/material/IconButton';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import FacebookIcon from '@mui/icons-material/Facebook';
+
+import "./Contact.scss"
 
 export function Contact() {
     /*

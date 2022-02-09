@@ -2,6 +2,8 @@ import React from "react";
 import DeviceImage from "../../image/device-screenshot-v1.png"
 import AppStoreIcon from "../../image/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"
 
+import "./AppDisplay.scss"
+
 export function AppDisplay() {
 
     return (

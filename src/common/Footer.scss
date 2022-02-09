@@ -1,0 +1,14 @@
+@use '../style/commonStyle';
+
+.footer-block {
+	height: commonStyle.$footer_height;
+	max-width: 1200px;
+	margin: 0 auto;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: #999;
+
+	@media (max-width: commonStyle.$mobile_size) {
+		padding: 0px 16px;
+	}
+}

@@ -1,0 +1,74 @@
+@use "../style/commonStyle";
+
+.get-started-block {
+	background-color: #314152;
+	margin: 8vh 0%;
+	padding: 68px;
+	text-align: center;
+
+	@media (max-width: commonStyle.$mobile_size) {
+		padding: 68px 44px;
+	}
+
+	h2 {
+		font-family: commonStyle.$main_font;
+		font-size: 48px;
+		font-weight: 400;
+		color: #fff;
+		margin: 10px;
+		padding-bottom: 26px;
+
+		@media (max-width: commonStyle.$mobile_size) {
+			margin: 30px 10px;
+			font-size: 40px;
+			padding-bottom: 10px;
+		}
+	}
+	.get-started-desc {
+		text-align: left;
+		max-width: 1100px;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+
+		.desc-block-1 {
+			flex: 0 0 56%;
+
+			@media (max-width: commonStyle.$mobile_size) {
+				flex: 0 0 100%;
+			}
+
+			.get-started-text-block {
+				padding: 15px 0px;
+
+				h3 {
+					font-family: commonStyle.$main_font;
+					color: #fff;
+					font-size: 24px;
+					margin: 16px 0px;
+				}
+				p {
+					font-family: commonStyle.$main_font;
+					color: #fff;
+					font-size: 18px;
+					line-height: 1.3em;
+					margin: 8px 0px;
+				}
+			}
+		}
+		.desc-block-2 {
+			padding: 0px 0px 0px 4%;
+			flex: 0 0 40%;
+
+			@media (max-width: commonStyle.$mobile_size) {
+				flex: 0 0 100%;
+				padding: 36px 0px 0px 0px;
+			}
+
+			img {
+				border-radius: 3%;
+				width: 100%;
+			}
+		}
+	}
+}

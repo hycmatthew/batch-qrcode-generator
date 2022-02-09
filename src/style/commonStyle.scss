@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+$mobile_size: 768px;
+$footer_height: 36px;
+$main_font: 'Varela Round', Helvetica, sans-serif;
+
+body {
+	margin: 0px;
+}
+
+.root-content {
+	background-color: #f5f7f8;
+	min-height: calc(100% - $footer_height);
+	flex-direction: column;
+}

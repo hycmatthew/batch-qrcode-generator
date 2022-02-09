@@ -1,6 +1,8 @@
 import React from "react";
 import DescImage from "../../image/get-started-v2.jpg"
 
+import "./HowToUse.scss"
+
 export function HowToUse() {
 
     return (

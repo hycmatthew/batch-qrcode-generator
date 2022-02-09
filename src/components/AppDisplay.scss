@@ -1,0 +1,60 @@
+@use '../style/commonStyle';
+
+.device-display-block {
+	background-color: #fecd45;
+
+	.device-display-content {
+		max-width: 1200px;
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap-reverse;
+		align-items: center;
+
+		.screenshot-block {
+			flex: 0 0 40%;
+
+			@media (max-width: commonStyle.$mobile_size) {
+				flex: 0 0 100%;
+			}
+
+			.screenshot-img-block {
+				padding: 20% 20% 0% 20%;
+			}
+
+			img {
+				width: 100%;
+				vertical-align: bottom;
+			}
+		}
+
+		.device-content-block {
+			flex: 0 0 60%;
+
+			@media (max-width: commonStyle.$mobile_size) {
+				text-align: center;
+				flex: 0 0 100%;
+			}
+
+			.device-content-desc {
+				padding: 0% 0% 0% 15%;
+				color: #293042;
+
+				@media (max-width: commonStyle.$mobile_size) {
+					padding: 15% 0% 0% 0%;
+				}
+
+				h3 {
+					font-family: commonStyle.$main_font;
+					font-size: 28px;
+				}
+				p {
+					font-family: commonStyle.$main_font;
+					font-size: 18px;
+				}
+				img {
+					margin-top: 12px;
+				}
+			}
+		}
+	}
+}

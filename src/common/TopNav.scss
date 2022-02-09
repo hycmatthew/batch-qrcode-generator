@@ -1,0 +1,29 @@
+@use '../style/commonStyle';
+
+.top-nav-wrapper {
+	background-color: #fff;
+	padding: 18px 24px;
+	box-shadow: 0 1px 4px #bbc2c5;
+
+	.top-nav {
+		max-width: 1200px;
+		margin: 0 auto;
+
+		Button {
+			padding: 0% 3%;
+			text-transform: none;
+		}
+		a {
+			font-family: commonStyle.$main_font;
+			font-size: 15px;
+			color: #293745;
+			text-transform: none;
+			text-decoration: none;
+			padding: 0% 3%;
+		}
+		img {
+			width: 3.5%;
+			min-width: 60px;
+		}
+	}
+}

@@ -7,12 +7,12 @@ import TableRow from '@mui/material/TableRow';
 import LoadingButton from '@mui/lab/LoadingButton';
 import DownloadIcon from '@mui/icons-material/Download';
 
-import { TopNav } from '../TopNav.js';
+import { TopNav } from '../common/TopNav.js';
 import { useLocation } from "react-router";
 import QRCodeStyling from "qr-code-styling";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
-import { Footer } from "../Footer.js";
+import { Footer } from "../common/Footer.js";
 
 export function DownloadPage() {
     document.title = "Batch QR Code";

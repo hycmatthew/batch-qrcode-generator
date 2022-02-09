@@ -6,8 +6,6 @@ import { Provider } from "./CodeContext.js";
 import { DownloadPage } from "./pages/DownloadPage.js";
 import { Contact } from "./pages/Contact.js";
 
-import "./App.scss";
-
 const App = () => {
     ReactGA.initialize("G-53MJ95EYEG");
 
