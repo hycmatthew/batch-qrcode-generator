@@ -467,15 +467,6 @@ Support up to 200 links"
     <ThemeProvider theme={theme}>
       <List
         className="side-main-list"
-        subheader={
-          <ListSubheader
-            component="div"
-            id="nested-list-subheader"
-            disableSticky={true}
-          >
-            QR Code Setting
-          </ListSubheader>
-        }
       >
         <ListItem>
           <ToggleButtonGroup
@@ -484,8 +475,8 @@ Support up to 200 links"
             onChange={updateQRCodeType}
             exclusive
           >
-            <ToggleButton value={false}>Single</ToggleButton>
-            <ToggleButton value={true}>Batch</ToggleButton>
+            <ToggleButton sx={{minWidth: 150}} value={false}>Single</ToggleButton>
+            <ToggleButton sx={{minWidth: 150}} value={true}>Batch</ToggleButton>
           </ToggleButtonGroup>
         </ListItem>
         <List component="div" disablePadding>
