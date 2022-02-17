@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { CodeMenu } from '../components/CodeMenu.js';
 import { SideMenu } from '../components/SideMenu.js';
 import { TopNav } from '../common/TopNav.js';
 import { ImageLayer } from "../components/ImageLayer.js";
@@ -19,7 +20,7 @@ export function MainPage() {
                     <div className="preview-wrapper">
                         <div className="preview-main">
                             <div className="preview-left-block">
-                                <SideMenu />
+                                <CodeMenu />
                             </div>
                             <div className="preview-right-block">
                                 <ImageLayer />
