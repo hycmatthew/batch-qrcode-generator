@@ -14,8 +14,8 @@ import CornerType1 from "../../../image/corner-type1.png";
 import CornerType2 from "../../../image/corner-type3.png";
 import CornerType3 from "../../../image/corner-type4.png";
 
-import CornerDotType1 from "../../../image/dot-type1.png";
-import CornerDotType2 from "../../../image/dot-type3.png";
+import CornerDotType1 from "../../../image/corner-dot-type1.png";
+import CornerDotType2 from "../../../image/corner-dot-type3.png";
 
 const dotData = [
 	{
@@ -85,13 +85,13 @@ const updateCodeDotType = "updateCodeDotType";
 const updateCornerType = "updateCornerType";
 const updateCornerDotType = "updateCornerDotType";
 
-const DotSelect = (eventTimer, actionType) => {
+const DotSelect = ({actionType, selectedType}) => {
 	switch (actionType) {
 		case updateCodeDotType:
 			return (
 				<ImageList sx={{ width: 520, height: 300 }} cols={4}>
 					{dotData.map((item) => (
-						<RadioBlock props={{ item }} />
+						<RadioBlock key={item.key} props={{ item, actionType: updateCodeDotType, isCheck: (item.title === selectedType)? true : false}} />
 					))}
 				</ImageList>
 			);
@@ -99,15 +99,15 @@ const DotSelect = (eventTimer, actionType) => {
 			return (
 				<ImageList sx={{ width: 520, height: 210 }} cols={4}>
 					{cornerData.map((item) => (
-						<RadioBlock props={{ item }} />
+						<RadioBlock key={item.key} props={{ item, actionType: updateCornerType, isCheck: (item.title === selectedType)? true : false}} />
 					))}
 				</ImageList>
 			);
-		default:
+		case updateCornerDotType:
 			return (
 				<ImageList sx={{ width: 520, height: 210 }} cols={4}>
 					{cornerDotData.map((item) => (
-						<RadioBlock props={{ item }} />
+						<RadioBlock key={item.key} props={{ item, actionType: updateCornerDotType, isCheck: (item.title === selectedType)? true : false}} />
 					))}
 				</ImageList>
 			);

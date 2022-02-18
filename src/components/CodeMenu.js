@@ -275,11 +275,11 @@ Support up to 200 links"
 			case 2:
 				return CodeImage(eventTimer)
 			case 3:
-				return DotSelect(eventTimer, 'updateCodeDotType')
+				return DotSelect({ actionType: 'updateCodeDotType', selectedType: state.dotType })
 			case 4:
-				return DotSelect(eventTimer, 'updateCornerType')
+				return DotSelect({ actionType: 'updateCornerType', selectedType: state.cornerType })
 			case 5:
-				return DotSelect(eventTimer, 'updateCornerDotType')
+				return DotSelect({ actionType: 'updateCornerDotType', selectedType: state.cornerDotType })
 			case 6:
 				return DotSelect(eventTimer)
 			default:

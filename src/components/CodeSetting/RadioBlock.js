@@ -1,19 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Radio from "@mui/material/Radio";
 import ImageListItem from "@mui/material/ImageListItem";
 import ImageListItemBar from "@mui/material/ImageListItemBar";
 import { CodeContext } from "../../CodeContext.js";
-import DescImage from "../../../image/get-started-v2.jpg";
 
 import "./RadioBlock.scss"
 
 const RadioBlock = ({props}) => {
 	const { state, dispatch } = useContext(CodeContext);
-	const [selectedValue, setSelectedValue] = React.useState("a");
+
+	const updateCodeDotType = "updateCodeDotType";
+	const updateCornerType = "updateCornerType";
+	const updateCornerDotType = "updateCornerDotType";
 
 	const handleChange = (event) => {
-		setSelectedValue(event.target.value);
-		dispatch({ type: "updateCodeType", isBatch: type });
+		console.log(event.target.value)
+		console.log(props.actionType)
+		switch(props.actionType) {
+			case updateCodeDotType:
+				dispatch({ type: props.actionType, dotType: event.target.value });
+				break;
+			case updateCornerType:
+				dispatch({ type: props.actionType, cornerType: event.target.value });
+				break;
+			case updateCornerDotType:
+				dispatch({ type: props.actionType, cornerDotType: event.target.value });
+			break;
+		}
 	};
 
 	console.log(props);
@@ -30,9 +43,9 @@ const RadioBlock = ({props}) => {
 				title={props.item.title}
 				subtitle={
 					<Radio
-						checked={selectedValue === "a"}
-						onChange={() => {}}
-						value="a"
+						checked={props.isCheck}
+						onChange={handleChange}
+						value={props.item.title}
 						name="radio-buttons"
 						inputProps={{ "aria-label": "A" }}
 					/>
