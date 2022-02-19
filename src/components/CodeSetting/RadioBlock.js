@@ -40,7 +40,6 @@ const RadioBlock = ({props}) => {
 				loading="lazy"
 			/>
 			<ImageListItemBar
-				title={props.item.title}
 				subtitle={
 					<Radio
 						checked={props.isCheck}

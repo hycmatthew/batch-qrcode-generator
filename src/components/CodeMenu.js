@@ -15,6 +15,7 @@ import { styled } from "@mui/styles";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { CodeContext } from "../CodeContext.js";
 import CodeColor from "./CodeSetting/CodeColor.js"
+import CodeSize from "./CodeSetting/CodeSize.js"
 import CodeImage from "./CodeSetting/CodeImage.js"
 import DotSelect from "./CodeSetting/DotSelect.js"
 
@@ -271,7 +272,7 @@ Support up to 200 links"
 	const topPanel = (type) => {
 		switch(type){
 			case 1:
-				return CodeColor(eventTimer)
+				return CodeSize(eventTimer)
 			case 2:
 				return CodeImage(eventTimer)
 			case 3:

@@ -16,6 +16,8 @@ const initialState = {
     dotType: "square",
     cornerType: "square",
     cornerDotType: "square",
+    syncCornerColor: true,
+    syncCornerDotColor: true,
     codeData: {}
 };
 
@@ -39,15 +41,19 @@ function dataReducer(state, action) {
         case 'updateImageSize':
             return { ...state, 'imageSize': action.imageSize};
         case 'updateContainImage':
-            return { ...state, 'containImage': action.containImage};    
+            return { ...state, 'containImage': action.containImage};
         case 'updateInputImage':
             return { ...state, 'imageFile': action.imageFile, 'containImage': action.containImage};
         case 'updateCodeDotType':
             return { ...state, 'dotType': action.dotType};
         case 'updateCornerType':
-            return { ...state, 'cornerType': action.cornerType};    
+            return { ...state, 'cornerType': action.cornerType};
         case 'updateCornerDotType':
-            return { ...state, 'cornerDotType': action.cornerDotType};    
+            return { ...state, 'cornerDotType': action.cornerDotType};
+        case 'udpateSyncCornerColor':
+            return { ...state, 'syncCornerColor': action.syncCornerColor};
+        case 'udpateSyncCornerDotColor':
+            return { ...state, 'syncCornerDotColor': action.syncCornerDotColor};
         default: 
             return state
     }
