@@ -5,16 +5,11 @@ import Slider from "@mui/material/Slider";
 import MuiInput from "@mui/material/Input";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import { styled } from "@mui/styles";
 
 import { CodeContext } from "../../CodeContext.js";
 
 const CodeImage = (eventTimer) => {
 	const { state, dispatch } = useContext(CodeContext);
-
-	const Input = styled(MuiInput)`
-		width: 42px;
-	`;
 
 	const uploadImage = (e) => {
 		if (ValidateFileUpload(e)) {
@@ -38,18 +33,18 @@ const CodeImage = (eventTimer) => {
 
 	const updateImageSize = (e) => {
 		let sizeNum = parseInt(e.target.value);
-		clearTimeout(eventTimer);
-		setTypingTimer(
-			setTimeout(() => {
+		
+		clearTimeout(eventTimer.current);
+		eventTimer.current = setTimeout(() => {
 				dispatch({ type: "updateImageSize", imageSize: sizeNum });
-			}, 200)
-		);
+		}, 25)
+		
 	};
 
 	return (
 		<>
 			<label htmlFor="contained-button-file">
-				<Input
+				<MuiInput
 					accept="image/*"
 					id="contained-button-file"
 					style={{ display: "none" }}
@@ -80,7 +75,7 @@ const CodeImage = (eventTimer) => {
 						/>
 					</Grid>
 					<Grid item>
-						<Input
+						<MuiInput
 							value={state.imageSize}
 							size="small"
 							onChange={updateImageSize}
