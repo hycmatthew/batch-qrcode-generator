@@ -281,8 +281,6 @@ Support up to 200 links"
 				return DotSelect({ actionType: 'updateCornerType', selectedType: state.cornerType })
 			case 5:
 				return DotSelect({ actionType: 'updateCornerDotType', selectedType: state.cornerDotType })
-			case 6:
-				return DotSelect(eventTimer)
 			default:
 				return CodeColor(eventTimer)
 		}
@@ -318,7 +316,6 @@ Support up to 200 links"
 					<Tab label="Dot" />
 					<Tab label="Corner" />
 					<Tab label="Corner Dot" />
-					<Tab label="Item Seven" />
 				</Tabs>
 				{ topPanel(value) }
 			</Box>

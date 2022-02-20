@@ -143,6 +143,7 @@ const CodeColor = (eventTimer) => {
 					onChange={updateCornerColor}
 				/>
 				<FormControlLabel
+					className="code-color-sync-label"
 					control={
 						<Checkbox
 						checked={state.syncCornerColor}
@@ -169,6 +170,7 @@ const CodeColor = (eventTimer) => {
 					onChange={updateCornerDotColor}
 				/>
 				<FormControlLabel
+					className="code-color-sync-label"
 					control={
 						<Checkbox
 							checked={state.syncCornerDotColor}

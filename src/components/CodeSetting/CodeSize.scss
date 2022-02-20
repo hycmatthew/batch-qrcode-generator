@@ -1,14 +1,11 @@
 @use '../../style/commonStyle';
 
-.code-color-wrapper{
+.code-size-wrapper{
     display: flex;
     flex-direction: column;
+    padding: 16px 24px;
 
     .code-color-block{
         padding: 8px;
-
-        .code-color-sync-label{
-            padding: 0px 10px 10px 10px;
-        }
     }
 }

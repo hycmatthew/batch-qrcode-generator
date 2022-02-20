@@ -1,0 +1,32 @@
+@use "../../style/commonStyle";
+
+$button_block_width: 140px;
+$button_block_padding: 12px;
+
+.code-image-wrapper {	
+	display: flex;
+    flex-direction: column;
+	padding: 16px 24px;
+
+	.code-image-slider {
+		padding: 24px 12px;
+	}
+
+    .code-image-upload-block{
+        display: inline-block;
+        width: $button_block_width;
+        padding: $button_block_padding;
+        .code-image-upload-btn{
+            width: 100%;
+        }
+    }
+
+    .code-image-delete-block{
+        display: inline-block;
+        width: $button_block_width;
+        padding: $button_block_padding;
+        .code-image-delete-btn{
+            width: 100%;
+        }
+    }
+}

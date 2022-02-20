@@ -6,6 +6,7 @@ import MuiInput from "@mui/material/Input";
 import Box from "@mui/material/Box";
 
 import { CodeContext } from "../../CodeContext.js";
+import "./CodeSize.scss";
 
 const CodeSize = (eventTimer) => {
 	const { state, dispatch } = useContext(CodeContext);
@@ -16,7 +17,7 @@ const CodeSize = (eventTimer) => {
       };
 
 	return (
-		<>
+		<div className="code-size-wrapper">
 			<Box sx={{ width: 250 }}>
 				<Typography id="code-size-slider" gutterBottom>
 					QR Code Size (In Pixel)
@@ -48,7 +49,7 @@ const CodeSize = (eventTimer) => {
 					</Grid>
 				</Grid>
 			</Box>
-		</>
+		</div>
 	);
 };
 

@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import { CodeContext } from "../../CodeContext.js";
+import "./CodeImage.scss";
 
 const CodeImage = (eventTimer) => {
 	const { state, dispatch } = useContext(CodeContext);
@@ -16,10 +17,18 @@ const CodeImage = (eventTimer) => {
 			dispatch({
 				type: "updateInputImage",
 				imageFile: e.target.files[0],
-				containImage: showImageSetting,
+				containImage: true,
 			});
 		}
 	};
+
+	const deleteImage = () => {
+		console.log("deleteImage start!")
+		dispatch({
+			type: "updateContainImage",
+			containImage: false,
+		});
+	}
 
 	const ValidateFileUpload = (e) => {
 		const imageFile = e.target.files[0];
@@ -33,29 +42,45 @@ const CodeImage = (eventTimer) => {
 
 	const updateImageSize = (e) => {
 		let sizeNum = parseInt(e.target.value);
-		
+
 		clearTimeout(eventTimer.current);
 		eventTimer.current = setTimeout(() => {
-				dispatch({ type: "updateImageSize", imageSize: sizeNum });
-		}, 25)
-		
+			dispatch({ type: "updateImageSize", imageSize: sizeNum });
+		}, 25);
+	};
+
+	const allowDeleteButton = () => {
+		if (state.containImage) {
+			return (
+				<div className="code-image-delete-block">
+					<Button className="code-image-delete-btn" variant="outlined" color="error" onClick={deleteImage}>
+						Delete
+					</Button>
+				</div>
+			);
+		} else {
+			return null;
+		}
 	};
 
 	return (
-		<>
-			<label htmlFor="contained-button-file">
-				<MuiInput
-					accept="image/*"
-					id="contained-button-file"
-					style={{ display: "none" }}
-					type="file"
-					onChange={(e) => uploadImage(e)}
-				/>
-				<Button variant="contained" component="span">
-					Upload
-				</Button>
-			</label>
-			<Box sx={{ width: 250 }}>
+		<div className="code-image-wrapper">
+			<div>
+				<div className="code-image-upload-block">
+					<Button className="code-image-upload-btn" variant="contained" component="label">
+						<MuiInput
+							accept="image/*"
+							id="contained-button-file"
+							style={{ display: "none" }}
+							type="file"
+							onChange={uploadImage}
+						/>
+						Upload
+					</Button>
+				</div>
+				{allowDeleteButton()}
+			</div>
+			<Box className="code-image-slider" sx={{ width: 250 }}>
 				<Typography id="image-size-slider" gutterBottom>
 					Logo Size
 				</Typography>
@@ -90,7 +115,7 @@ const CodeImage = (eventTimer) => {
 					</Grid>
 				</Grid>
 			</Box>
-		</>
+		</div>
 	);
 };
 
