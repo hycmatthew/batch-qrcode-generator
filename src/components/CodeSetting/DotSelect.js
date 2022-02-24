@@ -85,11 +85,11 @@ const updateCodeDotType = "updateCodeDotType";
 const updateCornerType = "updateCornerType";
 const updateCornerDotType = "updateCornerDotType";
 
-const DotSelect = ({actionType, selectedType}) => {
+const DotSelect = ({actionType, selectedType, desktopMode}) => {
 	switch (actionType) {
 		case updateCodeDotType:
 			return (
-				<ImageList sx={{ width: 520, height: 280 }} cols={4}>
+				<ImageList sx={{ width: 520, height: 280 }} cols={desktopMode?4:2}>
 					{dotData.map((item) => (
 						<RadioBlock key={item.key} props={{ item, actionType: updateCodeDotType, isCheck: (item.title === selectedType)? true : false}} />
 					))}
@@ -97,7 +97,7 @@ const DotSelect = ({actionType, selectedType}) => {
 			);
 		case updateCornerType:
 			return (
-				<ImageList sx={{ width: 520, height: 185 }} cols={4}>
+				<ImageList sx={{ width: 520, height: 180 }} cols={desktopMode?4:2}>
 					{cornerData.map((item) => (
 						<RadioBlock key={item.key} props={{ item, actionType: updateCornerType, isCheck: (item.title === selectedType)? true : false}} />
 					))}
@@ -105,7 +105,7 @@ const DotSelect = ({actionType, selectedType}) => {
 			);
 		case updateCornerDotType:
 			return (
-				<ImageList sx={{ width: 520, height: 185 }} cols={4}>
+				<ImageList sx={{ width: 520, height: 180 }} cols={desktopMode?4:2}>
 					{cornerDotData.map((item) => (
 						<RadioBlock key={item.key} props={{ item, actionType: updateCornerDotType, isCheck: (item.title === selectedType)? true : false}} />
 					))}

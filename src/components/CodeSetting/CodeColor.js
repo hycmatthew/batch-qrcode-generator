@@ -106,6 +106,7 @@ const CodeColor = (eventTimer) => {
 					size="small"
 					value={state.codeColor}
 					inputProps={{ maxLength: 7 }}
+					sx={{ width: 150 }}
 					onChange={updateCodeColor}
 				/>
 			</div>
@@ -123,6 +124,7 @@ const CodeColor = (eventTimer) => {
 					size="small"
 					value={state.backgroundColor}
 					inputProps={{ maxLength: 7 }}
+					sx={{ width: 150 }}
 					onChange={updateBackgroundColor}
 				/>
 			</div>
@@ -140,6 +142,7 @@ const CodeColor = (eventTimer) => {
 					size="small"
 					value={state.cornerColor}
 					inputProps={{ maxLength: 7 }}
+					sx={{ width: 150 }}
 					onChange={updateCornerColor}
 				/>
 				<FormControlLabel
@@ -167,6 +170,7 @@ const CodeColor = (eventTimer) => {
 					size="small"
 					value={state.cornerDotColor}
 					inputProps={{ maxLength: 7 }}
+					sx={{ width: 150 }}
 					onChange={updateCornerDotColor}
 				/>
 				<FormControlLabel

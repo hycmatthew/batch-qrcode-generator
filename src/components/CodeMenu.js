@@ -1,4 +1,6 @@
 import React, { useContext, useRef } from "react";
+import useMediaQuery from '@mui/material/useMediaQuery';
+
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import MuiInput from "@mui/material/Input";
@@ -40,6 +42,7 @@ export function CodeMenu() {
 	};
 
 	const [typingTimer, setTypingTimer] = React.useState(null);
+	const matches = useMediaQuery('(min-width: 1000px)');
 
 	const { state, dispatch } = useContext(CodeContext);
 
@@ -276,11 +279,11 @@ Support up to 200 links"
 			case 2:
 				return CodeImage(eventTimer)
 			case 3:
-				return DotSelect({ actionType: 'updateCodeDotType', selectedType: state.dotType })
+				return DotSelect({ actionType: 'updateCodeDotType', selectedType: state.dotType, desktopMode: matches })
 			case 4:
-				return DotSelect({ actionType: 'updateCornerType', selectedType: state.cornerType })
+				return DotSelect({ actionType: 'updateCornerType', selectedType: state.cornerType, desktopMode: matches })
 			case 5:
-				return DotSelect({ actionType: 'updateCornerDotType', selectedType: state.cornerDotType })
+				return DotSelect({ actionType: 'updateCornerDotType', selectedType: state.cornerDotType, desktopMode: matches })
 			default:
 				return CodeColor(eventTimer)
 		}
@@ -299,7 +302,7 @@ Support up to 200 links"
 					flexGrow: 1,
 					bgcolor: "background.paper",
 					display: "flex",
-					height: 380,
+					height: 350,
 				}}
 			>
 				<Tabs
@@ -308,7 +311,7 @@ Support up to 200 links"
 					value={value}
 					onChange={handleChange}
 					aria-label="Vertical tabs example"
-					sx={{ borderRight: 1, borderColor: "divider", width: 150 }}
+					sx={{ borderRight: 1, borderColor: "divider", width: 150, flexShrink: 0 }}
 				>
 					<Tab label="Color" />
 					<Tab label="Size" />
