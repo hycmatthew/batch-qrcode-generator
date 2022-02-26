@@ -66,6 +66,10 @@
 		max-width: 300px;
 		margin: 40px auto;
 		padding: 4%;
+
+		.code-block{
+			box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+		}
 	}
 
 	.preview-block canvas {

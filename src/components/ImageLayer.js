@@ -135,7 +135,9 @@ export function ImageLayer() {
 				: "https://batchqrcode.com/";
 		qrCode.update({
 			data: tempLink,
-			margin: 20,
+			width: state.codeSize,
+			height: state.codeSize,
+			margin: state.marginWidth,
 			dotsOptions: {
                 type: state.dotType,
 				color: state.codeColor,
@@ -152,7 +154,7 @@ export function ImageLayer() {
 				color: state.backgroundColor,
 			},
 		});
-	}, [state.codeColor, state.backgroundColor, state.cornerColor, state.cornerDotColor, state.codeData, state.dotType, state.cornerType, state.cornerDotType]);
+	}, [state.codeColor, state.backgroundColor, state.cornerColor, state.cornerDotColor, state.codeData, state.dotType, state.cornerType, state.cornerDotType, state.codeSize, state.marginWidth]);
 
 	useEffect(() => {
 		if (state.containImage && state.imageFile !== "") {
@@ -235,7 +237,7 @@ export function ImageLayer() {
 	return (
 		<div className="image-layer">
 			<div className="preview-block">
-				<div ref={ref} />
+				<div className="code-block" ref={ref} />
 			</div>
 			{dlButtonLogic()}
 		</div>

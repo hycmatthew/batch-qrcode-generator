@@ -14,6 +14,8 @@ import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import { Footer } from "../common/Footer.js";
 
+import "./downloadPage.scss"
+
 export function DownloadPage() {
     document.title = "Batch QR Code";
 

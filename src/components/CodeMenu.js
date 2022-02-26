@@ -302,7 +302,7 @@ Support up to 200 links"
 					flexGrow: 1,
 					bgcolor: "background.paper",
 					display: "flex",
-					height: 350,
+					height: 330,
 				}}
 			>
 				<Tabs

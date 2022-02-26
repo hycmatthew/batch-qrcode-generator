@@ -14,40 +14,78 @@ const CodeSize = (eventTimer) => {
     const updateCodeSize = (e) => {
         let sizeNum = parseInt(e.target.value);
         dispatch({ type: "updateCodeSize", codeSize: sizeNum });
-      };
+    };
+
+	const updateMarginWidth = (e) => {
+        let widthNum = parseInt(e.target.value);
+        dispatch({ type: "updateMarginWidth", marginWidth: widthNum });
+    };
 
 	return (
 		<div className="code-size-wrapper">
 			<Box sx={{ width: 250 }}>
-				<Typography id="code-size-slider" gutterBottom>
-					QR Code Size (In Pixel)
-				</Typography>
-				<Grid container spacing={2} alignItems="center">
-					<Grid item xs>
-						<Slider
-							min={400}
-							step={50}
-							max={2000}
-							value={state.codeSize}
-							aria-labelledby="code-size-slider"
-							onChange={updateCodeSize}
-						/>
+				<div className="code-size-block">
+					<Typography id="code-size-slider" gutterBottom>
+						QR Code Size (In Pixel)
+					</Typography>
+					<Grid container spacing={2} alignItems="center">
+						<Grid item xs>
+							<Slider
+								min={400}
+								step={50}
+								max={2000}
+								value={state.codeSize}
+								aria-labelledby="code-size-slider"
+								onChange={updateCodeSize}
+							/>
+						</Grid>
+						<Grid item>
+							<MuiInput
+								value={state.codeSize}
+								size="small"
+								onChange={updateCodeSize}
+								inputProps={{
+									step: 1,
+									min: 400,
+									max: 2000,
+									type: "number",
+									"aria-labelledby": "code-size-slider",
+								}}
+							/>
+						</Grid>
 					</Grid>
-					<Grid item>
-						<MuiInput
-							value={state.codeSize}
-							size="small"
-							onChange={updateCodeSize}
-							inputProps={{
-								step: 1,
-								min: 400,
-								max: 2000,
-								type: "number",
-								"aria-labelledby": "code-size-slider",
-							}}
-						/>
+				</div>
+				<div className="code-size-block">
+					<Typography id="code-size-slider" gutterBottom>
+						Margin Width (In Pixel)
+					</Typography>
+					<Grid container spacing={2} alignItems="center">
+						<Grid item xs>
+							<Slider
+								min={0}
+								step={5}
+								max={200}
+								value={state.marginWidth}
+								aria-labelledby="code-size-slider"
+								onChange={updateMarginWidth}
+							/>
+						</Grid>
+						<Grid item>
+							<MuiInput
+								value={state.marginWidth}
+								size="small"
+								onChange={updateMarginWidth}
+								inputProps={{
+									step: 1,
+									min: 0,
+									max: 200,
+									type: "number",
+									"aria-labelledby": "code-size-slider",
+								}}
+							/>
+						</Grid>
 					</Grid>
-				</Grid>
+				</div>
 			</Box>
 		</div>
 	);

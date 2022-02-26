@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import ReactGA from "react-ga";
 
@@ -8,6 +8,10 @@ import { Contact } from "./pages/Contact.js";
 
 const App = () => {
     ReactGA.initialize("G-53MJ95EYEG");
+
+	useEffect(() => {
+		ReactGA.pageview(window.location.pathname + window.location.search);
+	});
 
 	return (
 		<HashRouter>

@@ -8,6 +8,7 @@ const initialState = {
     imageFile: '',
     containImage: false,
     codeSize: 1000,
+    marginWidth: 50,
     imageSize: 100,
     codeColor: "#000000",
     cornerColor: "#000000",
@@ -38,6 +39,8 @@ function dataReducer(state, action) {
             return { ...state, 'cornerDotColor': action.cornerDotColor};
         case 'updateCodeSize':
             return { ...state, 'codeSize': action.codeSize};
+        case 'updateMarginWidth':
+            return { ...state, 'marginWidth': action.marginWidth};
         case 'updateImageSize':
             return { ...state, 'imageSize': action.imageSize};
         case 'updateContainImage':
