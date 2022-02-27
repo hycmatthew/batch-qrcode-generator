@@ -5,14 +5,15 @@ import { Footer } from "../common/Footer.js";
 import IconButton from '@mui/material/IconButton';
 import EmailRoundedIcon from '@mui/icons-material/EmailRounded';
 import FacebookIcon from '@mui/icons-material/Facebook';
+import ReactGA from 'react-ga';
 
 import "./Contact.scss"
 
 export function Contact() {
-    /*
-    useEffect(() => {
-        (window.adsbygoogle = window.adsbygoogle || []).push({});
-    });*/
+    // Init Page
+    document.title = "Contact Us | Batch QR Code";
+    ReactGA.initialize("G-53MJ95EYEG");
+	ReactGA.pageview('Contact-Page');
 
     return (
         <>
