@@ -13,15 +13,12 @@ import QRCodeStyling from "qr-code-styling";
 import JSZip from "jszip";
 import { saveAs } from 'file-saver';
 import { Footer } from "../common/Footer.js";
-import ReactGA from 'react-ga';
 
 import "./downloadPage.scss"
 
 export function DownloadPage() {
     // Init Page
     document.title = "Download | Batch QR Code";
-    ReactGA.initialize("G-53MJ95EYEG");
-	ReactGA.pageview('Download-Page');
 
     const location = useLocation();
     const {codeState, imageFile} = location.state;
