@@ -20,13 +20,12 @@ export function HowToUse() {
                     <p>Batch Mode - Input the links and filenames, seperate links and filenames by comma</p>
                 </div>
                 <div className="get-started-text-block">
-                    <h3>3. Download the QR Code</h3>
-                    <p>Click the download button and move to download page</p>
+                    <h3>3. Customize your QR Code</h3>
+                    <p>Color/ Size/ Logo/ Dots and corner style</p>
                 </div>
-            </div>
-            <div className="desc-block-2">
-                <div className="desc-image-block">
-                    <img alt="Get Started" src={DescImage} />
+                <div className="get-started-text-block">
+                    <h3>4. Download the QR Code</h3>
+                    <p>Click the download button and move to download page</p>
                 </div>
             </div>
         </div>

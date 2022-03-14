@@ -1,0 +1,13 @@
+@use '../style/commonStyle';
+
+.code-menu-panel{
+    @media (max-width: commonStyle.$tablet_size) {
+        padding-top: 10px;
+        height: 380px;
+    }
+
+    @media (max-width: commonStyle.$mobile_size) {
+        padding: 15px 20px;
+        height: 350px;
+    }
+}

@@ -26,4 +26,12 @@
 			min-width: 60px;
 		}
 	}
+	.lang-nav{
+		width: 60px;
+		height: 60px;
+		@media (max-width: commonStyle.$tablet_size) {
+			margin-top: -8px;
+			margin: 0 auto;
+		}
+	}
 }

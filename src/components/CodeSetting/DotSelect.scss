@@ -1,0 +1,22 @@
+@use '../../style/commonStyle';
+
+.code-dot-select-tab{
+    height: 300px;
+    @media (max-width: commonStyle.$tablet_size) {
+        height: 320px;
+    }
+}
+
+.corner-select-tab{
+    height: 185px;
+    @media (max-width: commonStyle.$tablet_size) {
+        height: 320px;
+    }
+}
+
+.corner-dot-select-tab{
+    height: 185px;
+    @media (max-width: commonStyle.$tablet_size) {
+        height: 320px;
+    }
+}

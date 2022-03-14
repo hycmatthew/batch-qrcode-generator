@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useTranslation } from 'react-i18next';
 import { TopNav } from '../common/TopNav.js';
 import { Footer } from "../common/Footer.js";
 
@@ -10,7 +11,8 @@ import "./Contact.scss"
 
 export function Contact() {
     // Init Page
-    document.title = "Contact Us | Batch QR Code";
+    const { t, i18n } = useTranslation();
+    document.title = t("contact-title");
 
     return (
         <>

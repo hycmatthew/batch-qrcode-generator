@@ -1,4 +1,5 @@
 import React, {useRef, useEffect, useState} from "react";
+import { useTranslation } from 'react-i18next';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -18,7 +19,8 @@ import "./downloadPage.scss"
 
 export function DownloadPage() {
     // Init Page
-    document.title = "Download | Batch QR Code";
+    const { t, i18n } = useTranslation();
+    document.title = t("download-title");
 
     const location = useLocation();
     const {codeState, imageFile} = location.state;

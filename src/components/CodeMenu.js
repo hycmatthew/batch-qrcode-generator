@@ -21,6 +21,8 @@ import CodeSize from "./CodeSetting/CodeSize.js"
 import CodeImage from "./CodeSetting/CodeImage.js"
 import DotSelect from "./CodeSetting/DotSelect.js"
 
+import './CodeMenu.scss'
+
 export function CodeMenu() {
 	const Input = styled(MuiInput)`
 		width: 42px;
@@ -42,7 +44,7 @@ export function CodeMenu() {
 	};
 
 	const [typingTimer, setTypingTimer] = React.useState(null);
-	const matches = useMediaQuery('(min-width: 1000px)');
+	const matches = useMediaQuery('(min-width: 900px)');
 
 	const { state, dispatch } = useContext(CodeContext);
 
@@ -296,22 +298,42 @@ Support up to 200 links"
 			setValue(newValue);
 		};
 
+		if(matches) {
+			return (
+				<Box
+					sx={{
+						flexGrow: 1,
+						bgcolor: "background.paper",
+						display: "flex",
+						height: 330,
+					}}
+				>
+					<Tabs
+						orientation='vertical'
+						value={value}
+						onChange={handleChange}
+						aria-label="Vertical tabs example"
+						sx={{ borderRight: 1, borderColor: "divider", width: 150, flexShrink: 0 }}
+					>
+						<Tab label="Color" />
+						<Tab label="Size" />
+						<Tab label="Image" />
+						<Tab label="Dot" />
+						<Tab label="Corner" />
+						<Tab label="Corner Dot" />
+					</Tabs>
+					{ topPanel(value) }
+				</Box>
+			);
+		}
 		return (
-			<Box
-				sx={{
-					flexGrow: 1,
-					bgcolor: "background.paper",
-					display: "flex",
-					height: 330,
-				}}
-			>
+			<Box sx={{ width: '100%', height: '400px' }}>
 				<Tabs
-					orientation="vertical"
 					variant="scrollable"
+					scrollButtons
 					value={value}
 					onChange={handleChange}
 					aria-label="Vertical tabs example"
-					sx={{ borderRight: 1, borderColor: "divider", width: 150, flexShrink: 0 }}
 				>
 					<Tab label="Color" />
 					<Tab label="Size" />
@@ -320,7 +342,9 @@ Support up to 200 links"
 					<Tab label="Corner" />
 					<Tab label="Corner Dot" />
 				</Tabs>
-				{ topPanel(value) }
+				<div className="code-menu-panel">
+					{ topPanel(value) }
+				</div>
 			</Box>
 		);
 	};
