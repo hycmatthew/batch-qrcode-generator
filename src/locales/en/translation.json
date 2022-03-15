@@ -2,13 +2,13 @@
     "main-title":"Batch QR Code Generator",
     "download-title":"Download | Batch QR Code Generator",
     "contact-title":"Contact Us | Batch QR Code Generator",
-    "top-menu-code":" QR Code Generator",
+    "top-menu-code":"QR Code Generator",
     "top-menu-contact":"Contact",
     "main-single-button":"Single",
     "main-batch-button":"Batch",
     "main-link-label":"Link",
     "main-link-file-label":"Links and output filenames",
-    "main-link-file-placeholder":"Seperate link and output image name by comma, example: https//example.com, image1, https//example2.com, image2 Support up to 200 links",
+    "main-link-file-placeholder":"Seperate link and output image name by comma, example: \nhttps//example.com, image1, https//example2.com, image2\nSupport up to 200 links",
     "main-color-label":"Color",
     "main-size-label":"Size",
     "main-image-label":"Image",
@@ -23,6 +23,7 @@
     "main-size-label-code":"QR Code Size (In Pixel)",
     "main-size-label-margin":"Margin Width (In Pixel)",
     "main-image-label-upload":"Upload",
+    "main-image-label-delete":"Delete",
     "main-image-label-logo":"Logo Size",
     "download-label":"Downlaod",
     "get-start":"Get Started",
@@ -36,5 +37,8 @@
     "get-start-four":"4. Download the QR Code",
     "get-start-four-desc":"Click the download button and move to download page",
     "total-label": "Total",
-    "qr-codes-label": "QR Codes."
+    "qr-codes-label": "QR Codes.",
+    "contact-top-desc": "Feel free to contact us if you have any questions",
+    "contact-report-desc": "Reporting a bug or technical issue",
+    "contact-report-notice-desc": "If you notice an issue on this Website, please contact us."
 }

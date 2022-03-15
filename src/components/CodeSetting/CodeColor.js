@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
@@ -8,6 +9,7 @@ import { CodeContext } from "../../CodeContext.js";
 import "./CodeColor.scss";
 
 const CodeColor = (eventTimer) => {
+	const { t, i18n } = useTranslation();
 	const { state, dispatch } = useContext(CodeContext);
 
 	const updateCodeColor = (e) => {
@@ -102,7 +104,7 @@ const CodeColor = (eventTimer) => {
 					/>
 				</div>
 				<TextField
-					label="Code Color"
+					label={t("main-color-label-code")}
 					size="small"
 					value={state.codeColor}
 					inputProps={{ maxLength: 7 }}
@@ -120,7 +122,7 @@ const CodeColor = (eventTimer) => {
 					/>
 				</div>
 				<TextField
-					label="Background Color"
+					label={t("main-color-label-background")}
 					size="small"
 					value={state.backgroundColor}
 					inputProps={{ maxLength: 7 }}
@@ -138,7 +140,7 @@ const CodeColor = (eventTimer) => {
 					/>
 				</div>
 				<TextField
-					label="Corner Color"
+					label={t("main-color-label-corner")}
 					size="small"
 					value={state.cornerColor}
 					inputProps={{ maxLength: 7 }}
@@ -153,7 +155,7 @@ const CodeColor = (eventTimer) => {
 							onChange={udpateSyncCornerColor}
 						/>
 					}
-					label="Sync with code color"
+					label={t("main-color-label-sync")}
 				/>
 			</div>
 			<div className="code-color-block">
@@ -166,7 +168,7 @@ const CodeColor = (eventTimer) => {
 					/>
 				</div>
 				<TextField
-					label="Corner Dot Color"
+					label={t("main-color-label-corner-dot")}
 					size="small"
 					value={state.cornerDotColor}
 					inputProps={{ maxLength: 7 }}
@@ -181,7 +183,7 @@ const CodeColor = (eventTimer) => {
 							onChange={udpateSyncCornerDotColor}
 						/>
 					}
-					label="Sync with code color"
+					label={t("main-color-label-sync")}
 				/>
 			</div>
 		</div>

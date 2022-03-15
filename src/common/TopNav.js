@@ -23,8 +23,8 @@ export function TopNav() {
                     <Grid item md={9} xs={10}>
                         <Stack spacing={2} direction="row">
                             <img alt="Batch QR Code Icon" src={qrCodeIcon}/>
-                            <Button variant="text" component={Link} to="/">QR Code Generator</Button>
-                            <Button variant="text" component={Link} to="/contact">{t("contact-title")}</Button>
+                            <Button variant="text" component={Link} to="/">{t("top-menu-code")}</Button>
+                            <Button variant="text" component={Link} to="/contact">{t("top-menu-contact")}</Button>
                         </Stack>
                     </Grid>
                     <Grid item md={3} xs={2}>

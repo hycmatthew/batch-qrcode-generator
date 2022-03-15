@@ -1,4 +1,5 @@
 import React, { useEffect, useContext, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import Compressor from 'compressorjs';
 import { CodeContext } from "../CodeContext.js";
 import { Link } from "react-router-dom";
@@ -114,6 +115,7 @@ const qrCode = new QRCodeStyling({
 });
 
 export function ImageLayer() {
+	const { t, i18n } = useTranslation();
 	const { state, dispatch } = useContext(CodeContext);
 
 	const [imageSrc, setImageSrc] = React.useState("");
@@ -220,15 +222,15 @@ export function ImageLayer() {
 						imageFile: imageSrc
 					}}
 				>
-					<Button variant="contained" disableElevation>
-						Download
+					<Button sx={{ width: 120 }} variant="contained" disableElevation>
+						{t("download-label")}
 					</Button>
 				</Link>
 			);
 		} else {
 			return (
-				<Button variant="contained" disableElevation disabled>
-					Download
+				<Button sx={{ width: 120 }} variant="contained" disableElevation disabled>
+					{t("download-label")}
 				</Button>
 			);
 		}

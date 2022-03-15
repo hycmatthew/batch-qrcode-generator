@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { useTranslation } from 'react-i18next';
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
@@ -9,6 +10,8 @@ import { CodeContext } from "../../CodeContext.js";
 import "./CodeSize.scss";
 
 const CodeSize = (eventTimer) => {
+
+	const { t, i18n } = useTranslation();
 	const { state, dispatch } = useContext(CodeContext);
 
     const updateCodeSize = (e) => {
@@ -26,7 +29,7 @@ const CodeSize = (eventTimer) => {
 			<Box sx={{ width: 250 }}>
 				<div className="code-size-block">
 					<Typography id="code-size-slider" gutterBottom>
-						QR Code Size (In Pixel)
+						{t("main-size-label-code")}
 					</Typography>
 					<Grid container spacing={2} alignItems="center">
 						<Grid item xs>
@@ -57,7 +60,7 @@ const CodeSize = (eventTimer) => {
 				</div>
 				<div className="code-size-block">
 					<Typography id="code-size-slider" gutterBottom>
-						Margin Width (In Pixel)
+						{t("main-size-label-margin")}
 					</Typography>
 					<Grid container spacing={2} alignItems="center">
 						<Grid item xs>

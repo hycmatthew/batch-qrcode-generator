@@ -21,7 +21,7 @@ export function Contact() {
                 <div className="contact-block">
                     <div className="contact-top-wrapper">
                         <div className="contact-top-block">
-                            <h3>Feel free to contact us if you have any questions</h3>
+                            <h3>{t("contact-top-desc")}</h3>
                             <a href="mailto:smallflamestudio@gmail.com"><IconButton variant="outlined" aria-label="add to shopping cart">
                                 <EmailRoundedIcon fontSize="large" />
                             </IconButton></a>
@@ -32,16 +32,10 @@ export function Contact() {
                     </div>
                     <div className="contact-bottom-wrapper">
                         <div className="question-block">
-                            <h3>Reporting a bug or technical issue</h3>
-                            <p>If you notice an issue on this Website, please contact <a href="mailto:smallflamestudio@gmail.com">us</a>.</p>
+                            <h3>{t("contact-report-desc")}</h3>
+                            <p>{t("contact-report-notice-desc")}</p>
                         </div>
                     </div>
-                    {/*
-                    <ins className='adsbygoogle'
-                        style={{ display: 'block' }}
-                        data-ad-client='ca-pub-4050046188209105'
-                        data-ad-slot='4050046188209105'
-                        data-ad-format='auto' />*/}
                 </div>
             </div>
             <Footer/>

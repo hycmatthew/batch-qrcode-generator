@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Slider from "@mui/material/Slider";
@@ -10,6 +11,7 @@ import { CodeContext } from "../../CodeContext.js";
 import "./CodeImage.scss";
 
 const CodeImage = (eventTimer) => {
+	const { t, i18n } = useTranslation();
 	const { state, dispatch } = useContext(CodeContext);
 
 	const uploadImage = (e) => {
@@ -54,7 +56,7 @@ const CodeImage = (eventTimer) => {
 			return (
 				<div className="code-image-delete-block">
 					<Button className="code-image-delete-btn" variant="outlined" color="error" onClick={deleteImage}>
-						Delete
+						{t("main-image-label-delete")}
 					</Button>
 				</div>
 			);
@@ -75,14 +77,14 @@ const CodeImage = (eventTimer) => {
 							type="file"
 							onChange={uploadImage}
 						/>
-						Upload
+						{t("main-image-label-upload")}
 					</Button>
 				</div>
 				{allowDeleteButton()}
 			</div>
 			<Box className="code-image-slider" sx={{ width: 250 }}>
 				<Typography id="image-size-slider" gutterBottom>
-					Logo Size
+					{t("main-image-label-logo")}
 				</Typography>
 				<Grid container spacing={2} alignItems="center">
 					<Grid item xs>

@@ -136,11 +136,11 @@ export function DownloadPage() {
                 <div className="download-main">
                     <div className="download-page">
                         <div className="download-block">
-                            <LoadingButton onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">Download</LoadingButton>
+                            <LoadingButton sx={{ width: 160 }} onClick={ downloadLogic } loading={loading} loadingPosition="start" startIcon={<DownloadIcon />} variant="contained">{t("download-label")}</LoadingButton>
                         </div>
                         <div className="code-preview-list">
                             <div className="code-preview-desc">
-                                <p>Total {codeState.codeData.length} QR Codes.</p>
+                                <p>{t("total-label")} {codeState.codeData.length} {t("qr-codes-label")} </p>
                             </div>
                             <TableContainer>
                                 <Table aria-label="simple table">

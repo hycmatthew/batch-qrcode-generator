@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import RadioBlock from "./RadioBlock.js";
 
 import ImageList from "@mui/material/ImageList";
@@ -88,6 +89,8 @@ const updateCornerType = "updateCornerType";
 const updateCornerDotType = "updateCornerDotType";
 
 const DotSelect = ({actionType, selectedType, desktopMode}) => {
+	const { t, i18n } = useTranslation();
+	
 	switch (actionType) {
 		case updateCodeDotType:
 			return (

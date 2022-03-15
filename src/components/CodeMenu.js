@@ -1,4 +1,5 @@
 import React, { useContext, useRef } from "react";
+import { useTranslation } from 'react-i18next';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import List from "@mui/material/List";
@@ -43,6 +44,7 @@ export function CodeMenu() {
 		cornerDotType: "square",
 	};
 
+	const { t, i18n } = useTranslation();
 	const [typingTimer, setTypingTimer] = React.useState(null);
 	const matches = useMediaQuery('(min-width: 900px)');
 
@@ -209,15 +211,13 @@ export function CodeMenu() {
 					<TextField
 						fullWidth
 						id="outlined-basic"
-						label="Links and output filenames"
+						label={t("main-link-file-label")}
 						variant="outlined"
 						value={codeSetting.inputText}
 						onChange={updateInputText}
 						multiline
 						rows={10}
-						placeholder="Seperate link and output image name by comma, example:
-https//example.com, image1, https//example2.com, image2
-Support up to 200 links"
+						placeholder={t("main-link-file-placeholder")}
 						focused
 					/>
 				);
@@ -226,7 +226,7 @@ Support up to 200 links"
 					<TextField
 						fullWidth
 						id="outlined-basic"
-						label="Link"
+						label={t("main-link-label")}
 						variant="outlined"
 						value={codeSetting.inputText}
 						onChange={updateInputText}
@@ -243,15 +243,13 @@ Support up to 200 links"
 						error
 						helperText={helperTextLogic()}
 						id="outlined-basic"
-						label="Links and output filenames"
+						label={t("main-link-file-label")}
 						variant="outlined"
 						value={codeSetting.inputText}
 						onChange={updateInputText}
 						multiline
 						rows={10}
-						placeholder="Seperate link and output image name by comma, example:
-https//example.com, image1, https//example2.com, image2
-Support up to 200 links"
+						placeholder={t("main-link-file-placeholder")}
 						focused
 					/>
 				);
@@ -262,7 +260,7 @@ Support up to 200 links"
 						error
 						helperText={helperTextLogic()}
 						id="outlined-basic"
-						label="Link"
+						label={t("main-link-label")}
 						variant="outlined"
 						value={codeSetting.inputText}
 						onChange={updateInputText}
@@ -315,12 +313,12 @@ Support up to 200 links"
 						aria-label="Vertical tabs example"
 						sx={{ borderRight: 1, borderColor: "divider", width: 150, flexShrink: 0 }}
 					>
-						<Tab label="Color" />
-						<Tab label="Size" />
-						<Tab label="Image" />
-						<Tab label="Dot" />
-						<Tab label="Corner" />
-						<Tab label="Corner Dot" />
+						<Tab label={t("main-color-label")} />
+						<Tab label={t("main-size-label")} />
+						<Tab label={t("main-image-label")} />
+						<Tab label={t("main-dot-label")} />
+						<Tab label={t("main-corner-label")} />
+						<Tab label={t("main-corner-dot-label")} />
 					</Tabs>
 					{ topPanel(value) }
 				</Box>
@@ -335,12 +333,12 @@ Support up to 200 links"
 					onChange={handleChange}
 					aria-label="Vertical tabs example"
 				>
-					<Tab label="Color" />
-					<Tab label="Size" />
-					<Tab label="Image" />
-					<Tab label="Dot" />
-					<Tab label="Corner" />
-					<Tab label="Corner Dot" />
+					<Tab label={t("main-color-label")} />
+					<Tab label={t("main-size-label")} />
+					<Tab label={t("main-image-label")} />
+					<Tab label={t("main-dot-label")} />
+					<Tab label={t("main-corner-label")} />
+					<Tab label={t("main-corner-dot-label")} />
 				</Tabs>
 				<div className="code-menu-panel">
 					{ topPanel(value) }
@@ -360,10 +358,10 @@ Support up to 200 links"
 						exclusive
 					>
 						<ToggleButton sx={{ minWidth: 150 }} value={false}>
-							Single
+							{t("main-single-button")}
 						</ToggleButton>
 						<ToggleButton sx={{ minWidth: 150 }} value={true}>
-							Batch
+							{t("main-batch-button")}
 						</ToggleButton>
 					</ToggleButtonGroup>
 				</ListItem>
