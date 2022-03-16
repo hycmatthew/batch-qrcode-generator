@@ -40,5 +40,9 @@
     "qr-codes-label": "個二維碼",
     "contact-top-desc": "如果您有任何問題，請隨時與我們聯繫",
     "contact-report-desc": "報告錯誤或技術問題",
-    "contact-report-notice-desc": "如果您在本網站上發現問題，請與我們聯繫。"
+    "contact-report-notice-desc": "如果您在本網站上發現問題，請與我們聯繫。",
+    "error-incorrect-link-format": "錯誤連結。",
+    "error-incorrect-filename-format": "文件名稱不正確。",
+    "error-more-than-links": "超過 200 個連結。",
+    "error-valid-image": "請選擇有效的圖片。"
 }

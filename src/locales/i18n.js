@@ -21,7 +21,7 @@ const resources = {
 i18n.use(LanguageDetector)
   .use(initReactI18next)
   .init({
-    detection: { order: ['localStorage'] },
+    detection: { order: ['navigator','localStorage'] },
     resources,
     fallbackLng: "en",
     lng: "en",

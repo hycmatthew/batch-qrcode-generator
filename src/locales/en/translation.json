@@ -40,5 +40,9 @@
     "qr-codes-label": "QR Codes.",
     "contact-top-desc": "Feel free to contact us if you have any questions",
     "contact-report-desc": "Reporting a bug or technical issue",
-    "contact-report-notice-desc": "If you notice an issue on this Website, please contact us."
+    "contact-report-notice-desc": "If you notice an issue on this Website, please contact us.",
+    "error-incorrect-link-format": "Incorrect link format.",
+    "error-incorrect-filename-format": "Incorrect filename format.",
+    "error-more-than-links": "More than 200 links.",
+    "error-valid-image": "Please select valid image."
 }

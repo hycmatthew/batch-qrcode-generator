@@ -36,7 +36,7 @@ const CodeImage = (eventTimer) => {
 		const imageFile = e.target.files[0];
 
 		if (!imageFile.name.match(/\.(jpg|jpeg|png)$/)) {
-			alert("Please select valid image.");
+			alert(t("error-valid-image"));
 			return false;
 		}
 		return true;

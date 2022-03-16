@@ -196,11 +196,11 @@ export function CodeMenu() {
 	const helperTextLogic = () => {
 		switch (errorType) {
 			case 1:
-				return "Incorrect link format.";
+				return t("error-incorrect-link-format");
 			case 2:
-				return "Incorrect filename format.";
+				return t("error-incorrect-filename-format");
 			case 3:
-				return "More than 200 links.";
+				return t("error-incorrect-link-format");
 		}
 	};
 

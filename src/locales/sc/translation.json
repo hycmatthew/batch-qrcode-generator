@@ -40,5 +40,9 @@
     "qr-codes-label": "个二维码",
     "contact-top-desc": "如果您有任何问题，请随时与我们联系",
     "contact-report-desc": "报告错误或技术问题",
-    "contact-report-notice-desc": "如果您在本网站上发现问题，请与我们联系。"
+    "contact-report-notice-desc": "如果您在本网站上发现问题，请与我们联系。",
+    "error-incorrect-link-format": "错误连结。",
+    "error-incorrect-filename-format": "文件名称不正确。",
+    "error-more-than-links": "超过 200 个连结。",
+    "error-valid-image": "请选择有效的图片。"
 }
